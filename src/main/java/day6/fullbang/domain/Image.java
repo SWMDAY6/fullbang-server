@@ -23,7 +23,7 @@ public class Image {
     private Place place;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "place_id")
+    @JoinColumn(name = "room_id")
     private Room room;
 
     private String url;
