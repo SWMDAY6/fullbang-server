@@ -28,7 +28,8 @@ public class Product {
 
     private Platform platform;
 
-    private ProductType productType;
+    @Column(name = "product_type")
+    private ProductType type;
 
     private int price;
 

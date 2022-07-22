@@ -27,6 +27,7 @@ public class Room {
     @JoinColumn(name = "place_id")
     private Place place;
 
+    @Column(name = "room_name")
     private String name;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
