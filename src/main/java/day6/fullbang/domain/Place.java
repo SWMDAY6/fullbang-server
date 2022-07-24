@@ -33,7 +33,6 @@ public class Place {
     @Column(name = "place_name")
     private String name;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "place_type")
     private String type;
 
