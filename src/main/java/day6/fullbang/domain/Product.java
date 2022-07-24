@@ -26,10 +26,10 @@ public class Product {
 
     private String url;
 
-    private Platform platform;
+    private String platform;
 
     @Column(name = "product_type")
-    private ProductType type;
+    private String type;
 
     private int price;
 

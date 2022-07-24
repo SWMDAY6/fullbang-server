@@ -35,7 +35,7 @@ public class Place {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "place_type")
-    private PlaceType type;
+    private String type;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
