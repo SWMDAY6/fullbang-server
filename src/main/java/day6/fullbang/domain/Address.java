@@ -25,5 +25,7 @@ public class Address {
     private String eupMyeonDong;
     private String addressLocality;
     private String streetAddress;
+    private String latitude;
+    private String longitude;
 
 }
