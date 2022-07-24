@@ -23,6 +23,7 @@ public class Address {
     private String siDo;
     private String siGunGu;
     private String eupMyeonDong;
+    private String addressCode;
     private String addressLocality;
     private String streetAddress;
     private String latitude;
