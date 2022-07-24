@@ -44,8 +44,6 @@ public class Place {
 
     private String detailInfo;
 
-    private Boolean smokingAvailability;
-
     private int yanolja_id;
     private int yget_id;
 
