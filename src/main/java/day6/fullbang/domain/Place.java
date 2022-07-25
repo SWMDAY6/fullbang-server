@@ -43,6 +43,7 @@ public class Place {
 
     private String contactInfo;
 
+    @Column(columnDefinition = "LONGTEXT")
     private String detailInfo;
 
     private int yanolja_id;
