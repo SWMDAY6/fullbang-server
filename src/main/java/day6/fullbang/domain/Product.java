@@ -33,6 +33,7 @@ public class Product {
     private String type;
 
     private int price;
+    private boolean isSoldOut;
 
     private LocalDateTime checkInDateTime;
     private LocalDateTime checkOutDateTime;
