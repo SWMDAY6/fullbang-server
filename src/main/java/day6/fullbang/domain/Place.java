@@ -46,6 +46,8 @@ public class Place {
     @Column(columnDefinition = "LONGTEXT")
     private String detailInfo;
 
+    private Boolean parkingAvailability;
+
     private int yanolja_id;
     private int yget_id;
 
