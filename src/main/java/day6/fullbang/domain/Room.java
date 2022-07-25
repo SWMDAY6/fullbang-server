@@ -43,7 +43,6 @@ public class Room {
     private String useInfo;
 
     private Boolean smokingAvailability;
-    private Boolean parkingAvailability;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Product> products;

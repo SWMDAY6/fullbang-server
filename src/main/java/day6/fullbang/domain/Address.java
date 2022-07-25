@@ -21,13 +21,16 @@ public class Address {
     @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
     private Place place;
 
-    private String siDo;
-    private String siGunGu;
-    private String eupMyeonDong;
+    private String addressFullName;
+    @Column(name = "region_1depth_name")
+    private String region1DepthName;
+    @Column(name = "region_2depth_name")
+    private String region2DepthName;
+    @Column(name = "region_3depth_name")
+    private String region3DepthName;
+
     private String addressCode;
-    private String addressLocality;
-    private String streetAddress;
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
 
 }
