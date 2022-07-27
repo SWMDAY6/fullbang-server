@@ -27,5 +27,6 @@ public class Image {
     @JoinColumn(name = "room_id")
     private Room room;
 
+    @Column(unique = true)
     private String url;
 }

@@ -8,9 +8,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "address")
+@Table(name = "address",
+    uniqueConstraints={
+        @UniqueConstraint(
+            columnNames={"latitude", "longitude"}
+        )
+    })
 public class Address {
 
     @Id

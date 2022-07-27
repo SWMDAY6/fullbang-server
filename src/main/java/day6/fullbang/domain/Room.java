@@ -36,8 +36,8 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Image> images;
 
-    private int standardCapacity;
-    private int maximumCapacity;
+    private Integer standardCapacity;
+    private Integer maximumCapacity;
 
     @Column(columnDefinition = "LONGTEXT")
     private String useInfo;
