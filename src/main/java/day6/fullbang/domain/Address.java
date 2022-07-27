@@ -16,7 +16,7 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
-    private int id;
+    private Long id;
 
     @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
     private Place place;

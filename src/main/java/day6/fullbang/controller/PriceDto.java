@@ -6,5 +6,5 @@ import lombok.Setter;
 
 @Setter
 public class PriceDto {
-    private int price;
+    private Long price;
 }

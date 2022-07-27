@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
+@Getter // TODO refactoring
 @Entity
 @Table(name = "product")
 public class Product {
@@ -19,7 +22,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    private int id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
@@ -32,7 +35,7 @@ public class Product {
     @Column(name = "product_type")
     private String type;
 
-    private int price;
+    private Long price;
     private boolean isSoldOut;
 
     private LocalDateTime checkInDateTime;

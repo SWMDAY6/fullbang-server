@@ -48,8 +48,8 @@ public class Place {
 
     private Boolean parkingAvailability;
 
-    private int yanolja_id;
-    private int yget_id;
+    private Long yanolja_id;
+    private Long yget_id;
 
     private LocalDateTime crawledAt;
 
