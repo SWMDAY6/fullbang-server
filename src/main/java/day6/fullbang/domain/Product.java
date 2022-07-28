@@ -12,8 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import day6.fullbang.dto.response.PriceDto;
-import lombok.Getter;
+import day6.fullbang.dto.response.PriceInfoDto;
 
 @Entity
 @Table(name = "product")
@@ -43,7 +42,7 @@ public class Product {
 
     private LocalDateTime crawledAt;
 
-    public PriceDto toPriceDto() {
-        return new PriceDto(price);
+    public PriceInfoDto toPriceInfoDto() {
+        return new PriceInfoDto(room.getPlaceName(), room.getName(), price, checkInDateTime.toLocalDate());
     }
 }

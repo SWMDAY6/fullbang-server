@@ -1,5 +1,10 @@
 package day6.fullbang.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,5 +21,10 @@ public class ProductService {
 
     public Product findOne(Long id) {
         return productRepository.findOne(id);
+    }
+
+    public List<Product> findByPlaceName(String placeName, String date) {
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
+        return productRepository.findByPlaceName(placeName, localDate);
     }
 }

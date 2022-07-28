@@ -48,4 +48,12 @@ public class Room {
     private List<Product> products;
 
     private LocalDateTime crawledAt;
+
+    public String getPlaceName() {
+        return place.getName();
+    }
+
+    public String getName() {
+        return name;
+    }
 }

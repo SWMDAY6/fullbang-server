@@ -58,4 +58,8 @@ public class Place {
 
     @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
     private final List<Room> rooms = new ArrayList<>();
+
+    public String getName() {
+        return name;
+    }
 }

@@ -1,8 +1,11 @@
 package day6.fullbang.repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +26,16 @@ public class ProductRepository {
     public List<Product> searchProductByPlace(Place place) {
         return em.createQuery("select p from Product p where p.room.place = :place", Product.class)
             .setParameter("place", place)
+            .getResultList();
+    }
+
+    public List<Product> findByPlaceName(String placeName, LocalDate date) {
+
+        return em.createQuery(
+            "select p from Product p where p.room.place.name = :placeName and p.checkInDateTime >= :checkInDate and p.checkOutDateTime < :checkOutDate", Product.class)
+            .setParameter("placeName", placeName)
+            .setParameter("checkInDate", date.atStartOfDay())
+            .setParameter("checkOutDate", date.plusDays(2).atStartOfDay())
             .getResultList();
     }
 }
