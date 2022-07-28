@@ -1,12 +1,12 @@
-package day6.fullbang.controller;
+package day6.fullbang.dto.response;
 
 import java.time.LocalDateTime;
 
 import com.google.gson.JsonObject;
 
-import lombok.Setter;
+import lombok.AllArgsConstructor;
 
-@Setter
+@AllArgsConstructor
 public class PriceDto {
     private Long price;
 

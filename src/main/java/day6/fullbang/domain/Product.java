@@ -12,9 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import day6.fullbang.dto.response.PriceDto;
 import lombok.Getter;
 
-@Getter // TODO refactoring
 @Entity
 @Table(name = "product")
 public class Product {
@@ -42,4 +42,8 @@ public class Product {
     private LocalDateTime checkOutDateTime;
 
     private LocalDateTime crawledAt;
+
+    public PriceDto toPriceDto() {
+        return new PriceDto(price);
+    }
 }

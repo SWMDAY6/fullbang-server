@@ -1,11 +1,8 @@
 package day6.fullbang.controller;
 
-import java.time.LocalDateTime;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import day6.fullbang.domain.Product;
@@ -19,13 +16,11 @@ public class MarketPriceController {
     private final ProductService productService;
 
     @GetMapping("/price/{id}")
-    public @ResponseBody String getPriceByProductId(@PathVariable(name = "id") Long id) {
+    public @ResponseBody
+    String getPriceByProductId(@PathVariable(name = "id") Long id) {
 
         Product product = productService.findOne(id);
 
-        PriceDto priceDto = new PriceDto();
-        priceDto.setPrice(product.getPrice());
-
-        return priceDto.getJson();
+        return product.toPriceDto().getJson();
     }
 }
