@@ -1,21 +1,23 @@
 package day6.fullbang.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import day6.fullbang.domain.Product;
+import day6.fullbang.dto.response.PriceInfoDto;
 import day6.fullbang.service.ProductService;
 import lombok.RequiredArgsConstructor;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class MarketPriceController {
 
@@ -23,28 +25,24 @@ public class MarketPriceController {
 
     @GetMapping("/price/{id}")
     @ResponseBody
-    public String getPriceByProductId(@PathVariable(name = "id") Long id) {
+    public PriceInfoDto getPriceByProductId(@PathVariable(name = "id") Long id) {
 
         Product product = productService.findOne(id);
 
-        return product.toPriceInfoDto().getJson();
+        return product.toPriceInfoDto();
     }
 
     @GetMapping("/price")
     @ResponseBody
-    public String getPriceByPlaceName(@RequestParam(name = "place_name") String placeName, @RequestParam String date) {
+    public List<PriceInfoDto> getPriceByPlaceName(@RequestParam(name = "place_name") String placeName, @RequestParam String date) {
 
         List<Product> products = productService.findByPlaceName(placeName, date);
-
-        JsonObject jsonObject = new JsonObject();
-        JsonArray jsonArray = new JsonArray();
+        List<PriceInfoDto> priceInfos = new ArrayList<>();
 
         for (Product product : products) {
-            jsonArray.add(product.toPriceInfoDto().getJson());
+            priceInfos.add(product.toPriceInfoDto());
         }
 
-        jsonObject.add("priceInfos", jsonArray);
-
-        return jsonObject.toString();
+        return priceInfos;
     }
 }
