@@ -19,14 +19,13 @@ public class MarketPriceController {
     private final ProductService productService;
 
     @GetMapping("/price/{id}")
-    @ResponseBody
-    public PriceDto getPriceByProductId(@PathVariable(name = "id") Long id) {
+    public @ResponseBody String getPriceByProductId(@PathVariable(name = "id") Long id) {
 
         Product product = productService.findOne(id);
 
         PriceDto priceDto = new PriceDto();
         priceDto.setPrice(product.getPrice());
 
-        return priceDto;
+        return priceDto.getJson();
     }
 }
