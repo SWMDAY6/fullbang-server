@@ -12,9 +12,9 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "address",
-    uniqueConstraints={
+    uniqueConstraints = {
         @UniqueConstraint(
-            columnNames={"latitude", "longitude"}
+            columnNames = {"latitude", "longitude"}
         )
     })
 public class Address {
