@@ -23,9 +23,6 @@ jobs:
         run: chmod +x ./gradlew
         shell: bash
 
-      - name: Test application.properties
-        run: cat server/fullbang/src/main/resources/application.properties
-
       - name: Build with Gradle
         run: ./gradlew clean build
         shell: bash
