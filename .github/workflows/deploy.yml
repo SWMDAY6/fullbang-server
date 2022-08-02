@@ -23,27 +23,6 @@ jobs:
         run: chmod +x ./gradlew
         shell: bash
 
-      - name: set datasource_url
-        uses: christian-draeger/write-properties@1.1.0
-        with:
-          path: 'src/main/resources/application.properties'
-          property: spring.datasource.url
-          value: ${{ secrets.DATASOURCE_URL }}
-
-      - name: set datasource_username
-        uses: christian-draeger/write-properties@1.1.0
-        with:
-          path: 'src/main/resources/application.properties'
-          property: spring.datasource.username
-          value: ${{ secrets.DATASOURCE_USERNAME }}
-
-      - name: set datasource_password
-        uses: christian-draeger/write-properties@1.1.0
-        with:
-          path: 'src/main/resources/application.properties'
-          property: spring.datasource.password
-          value: ${{ secrets.DATASOURCE_PASSWORD }}
-
       - name: Test application.properties
         run: cat server/fullbang/src/main/resources/application.properties
 
