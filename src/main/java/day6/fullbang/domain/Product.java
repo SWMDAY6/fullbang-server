@@ -14,8 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import day6.fullbang.dto.response.PriceInfoDto;
-
 @Entity
 @Table(name = "product")
 public class Product {

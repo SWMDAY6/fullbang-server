@@ -44,8 +44,4 @@ public class Room {
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Product> products;
-
-    public String getPlaceName() {
-        return place.getName();
-    }
 }
