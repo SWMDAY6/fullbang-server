@@ -45,8 +45,6 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Product> products;
 
-    private LocalDateTime crawledAt;
-
     public String getPlaceName() {
         return place.getName();
     }

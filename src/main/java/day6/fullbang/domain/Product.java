@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,12 +31,14 @@ public class Product {
 
     private String url;
 
-    private String platform;
+    @Enumerated(EnumType.STRING)
+    private Platform platform;
 
     @Column(name = "product_type")
     private String type;
 
-    private Long price;
+    private Integer price;
+
     private Boolean isSoldOut;
 
     private LocalDateTime checkInDateTime;
