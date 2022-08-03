@@ -48,8 +48,4 @@ public class Room {
     public String getPlaceName() {
         return place.getName();
     }
-
-    public String getName() {
-        return name;
-    }
 }

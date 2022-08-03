@@ -45,8 +45,4 @@ public class Product {
     private LocalDateTime checkOutDateTime;
 
     private LocalDateTime crawledAt;
-
-    public PriceInfoDto toPriceInfoDto() {
-        return new PriceInfoDto(room.getPlaceName(), room.getName(), price, checkInDateTime.toLocalDate());
-    }
 }
