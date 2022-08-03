@@ -1,6 +1,5 @@
 package day6.fullbang.domain;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -44,14 +43,4 @@ public class Room {
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Product> products;
-
-    private LocalDateTime crawledAt;
-
-    public String getPlaceName() {
-        return place.getName();
-    }
-
-    public String getName() {
-        return name;
-    }
 }

@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import day6.fullbang.dto.response.PriceInfoDto;
 
 @Entity
 @Table(name = "product")
@@ -29,20 +29,18 @@ public class Product {
 
     private String url;
 
-    private String platform;
+    @Enumerated(EnumType.STRING)
+    private Platform platform;
 
     @Column(name = "product_type")
     private String type;
 
-    private Long price;
+    private Integer price;
+
     private Boolean isSoldOut;
 
     private LocalDateTime checkInDateTime;
     private LocalDateTime checkOutDateTime;
 
     private LocalDateTime crawledAt;
-
-    public PriceInfoDto toPriceInfoDto() {
-        return new PriceInfoDto(room.getPlaceName(), room.getName(), price, checkInDateTime.toLocalDate());
-    }
 }

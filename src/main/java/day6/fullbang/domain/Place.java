@@ -1,19 +1,18 @@
 package day6.fullbang.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.NoArgsConstructor;
@@ -32,10 +31,10 @@ public class Place {
     private String name;
 
     @Column(name = "place_type")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private PlaceType type;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id")
+    @Embedded
     private Address address;
 
     private String contactInfo;
@@ -47,15 +46,10 @@ public class Place {
 
     @Column(unique = true)
     private Long yanolja_id;
-    @Column(unique = true)
-    private Long yget_id;
 
-    private LocalDateTime crawledAt;
+    @Column(unique = true)
+    private Long yeogieottae_id;
 
     @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
     private final List<Room> rooms = new ArrayList<>();
-
-    public String getName() {
-        return name;
-    }
 }
