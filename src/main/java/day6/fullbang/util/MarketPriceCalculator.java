@@ -24,6 +24,10 @@ public class MarketPriceCalculator {
         return sum / prices.size();
     }
 
+    public static Double getConfidenceIntervalOffset(List<Double> prices) {
+        return STANDARD_CRITICAL_VALUE * getStandardDeviation(prices) / sqrt(prices.size());
+    }
+
     public static Double getStandardDeviation(List<Double> values) {
 
         List<Double> squaredValues = new ArrayList<>();
