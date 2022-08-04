@@ -23,4 +23,12 @@ public class MarketPriceCalculator {
 
         return sum / prices.size();
     }
+
+    public static Double getStandardDeviation(List<Double> values) {
+
+        List<Double> squaredValues = new ArrayList<>();
+        values.forEach(v -> squaredValues.add(pow(v, 2)));
+
+        return sqrt(getMean(squaredValues) - pow(getMean(values), 2));
+    }
 }
