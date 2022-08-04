@@ -47,10 +47,10 @@ public class Place {
 	private Boolean parkingAvailability;
 
 	@Column(unique = true)
-	private Long yanolja_id;
+	private Long yanoljaId;
 
 	@Column(unique = true)
-	private Long yeogieottae_id;
+	private Long yeogieottaeId;
 
 	@OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
 	private final List<Room> rooms = new ArrayList<>();
