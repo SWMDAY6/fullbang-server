@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import day6.fullbang.dto.response.MarketPriceDto;
-import day6.fullbang.dto.service.MarketPriceCondition;
+import day6.fullbang.dto.request.MarketPriceCondition;
 import day6.fullbang.service.MarketPriceService;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +18,6 @@ public class ProductController {
     @GetMapping("/product/{addressCodeHead}/market-price")
     public MarketPriceDto getMarketPriceByAddressCode(@RequestParam MarketPriceCondition marketPriceCondition) {
 
-        marketPriceService.getByAddressCode(marketPriceCondition);
+        return marketPriceService.getByAddressCode(marketPriceCondition);
     }
 }

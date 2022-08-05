@@ -9,9 +9,8 @@ import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
 
-import day6.fullbang.domain.Product;
 import day6.fullbang.dto.product.PriceInfoDto;
-import day6.fullbang.dto.service.MarketPriceCondition;
+import day6.fullbang.dto.request.MarketPriceCondition;
 import lombok.RequiredArgsConstructor;
 
 @Repository

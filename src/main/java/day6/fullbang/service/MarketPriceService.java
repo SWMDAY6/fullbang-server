@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import day6.fullbang.dto.product.PriceInfoDto;
 import day6.fullbang.dto.response.MarketPriceDto;
-import day6.fullbang.dto.service.MarketPriceCondition;
+import day6.fullbang.dto.request.MarketPriceCondition;
 import day6.fullbang.util.MarketPriceCalculator;
 import lombok.RequiredArgsConstructor;
 
