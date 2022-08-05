@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import day6.fullbang.domain.Place;
-import day6.fullbang.dto.CoordinateDto;
+import day6.fullbang.dto.CoordinateRangeDto;
 import day6.fullbang.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +19,7 @@ public class PlaceService {
         return placeRepository.findAll();
     }
 
-    public List<Place> findPlacesByCoordinate(CoordinateDto coordinateDto) {
-        return placeRepository.findPlacesByCoordinate(coordinateDto);
+    public List<Place> findPlacesByCoordinate(CoordinateRangeDto coordinateRangeDto) {
+        return placeRepository.findPlacesByCoordinate(coordinateRangeDto);
     }
 }

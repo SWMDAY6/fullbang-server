@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import day6.fullbang.domain.Place;
-import day6.fullbang.dto.CoordinateDto;
+import day6.fullbang.dto.CoordinateRangeDto;
 import day6.fullbang.dto.response.PlaceResponseDto;
 import day6.fullbang.service.PlaceService;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,8 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @GetMapping("/places")
-    public List<PlaceResponseDto> readAllPlaces(@RequestBody CoordinateDto coordinateDto) {
-        List<Place> placesByCoordinate = placeService.findPlacesByCoordinate(coordinateDto);
+    public List<PlaceResponseDto> readAllPlaces(@RequestBody CoordinateRangeDto coordinateRangeDto) {
+        List<Place> placesByCoordinate = placeService.findPlacesByCoordinate(coordinateRangeDto);
 
         List<PlaceResponseDto> responsePlaces = new ArrayList<>();
         for (Place place : placesByCoordinate) {
