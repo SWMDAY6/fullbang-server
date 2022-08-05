@@ -22,7 +22,7 @@ public class Address {
 
     private String addressCode;
 
-    private double latitude;
+    private Double latitude;
 
-    private double longitude;
+    private Double longitude;
 }
