@@ -17,20 +17,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PlaceController {
 
-	private final PlaceService placeService;
+    private final PlaceService placeService;
 
-	@GetMapping("/places")
-	public List<PlaceResponseDto> readAllPlaces(@RequestBody CoordinateDto coordinateDto) {
-		List<Place> placesByCoordinate = placeService.findPlacesByCoordinate(coordinateDto);
+    @GetMapping("/places")
+    public List<PlaceResponseDto> readAllPlaces(@RequestBody CoordinateDto coordinateDto) {
+        List<Place> placesByCoordinate = placeService.findPlacesByCoordinate(coordinateDto);
 
-		List<PlaceResponseDto> responsePlaces = new ArrayList<>();
-		for (Place place : placesByCoordinate) {
-			PlaceResponseDto item = new PlaceResponseDto(place);
-			responsePlaces.add(item);
-		}
+        List<PlaceResponseDto> responsePlaces = new ArrayList<>();
+        for (Place place : placesByCoordinate) {
+            PlaceResponseDto item = new PlaceResponseDto(place);
+            responsePlaces.add(item);
+        }
 
-		return responsePlaces;
+        return responsePlaces;
 
-	}
+    }
 
 }

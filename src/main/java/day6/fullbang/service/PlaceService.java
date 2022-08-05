@@ -13,13 +13,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PlaceService {
 
-	private final PlaceRepository placeRepository;
+    private final PlaceRepository placeRepository;
 
-	public List<Place> findAll() {
-		return placeRepository.findAll();
-	}
+    public List<Place> findAll() {
+        return placeRepository.findAll();
+    }
 
-	public List<Place> findPlacesByCoordinate(CoordinateDto coordinateDto) {
-		return placeRepository.findPlacesByCoordinate(coordinateDto);
-	}
+    public List<Place> findPlacesByCoordinate(CoordinateDto coordinateDto) {
+        return placeRepository.findPlacesByCoordinate(coordinateDto);
+    }
 }

@@ -14,26 +14,26 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PlaceRepository {
 
-	private final EntityManager em;
+    private final EntityManager em;
 
-	public List<Place> findAll() {
-		String query = "select p from Place p";
-		return em.createQuery(query, Place.class).getResultList();
-	}
+    public List<Place> findAll() {
+        String query = "select p from Place p";
+        return em.createQuery(query, Place.class).getResultList();
+    }
 
-	public List<Place> findPlacesByCoordinate(CoordinateDto coordinateDto) {
-		double latitudeStart = coordinateDto.getLatitudeStart();
-		double longitudeStart = coordinateDto.getLongitudeStart();
+    public List<Place> findPlacesByCoordinate(CoordinateDto coordinateDto) {
+        double latitudeStart = coordinateDto.getLatitudeStart();
+        double longitudeStart = coordinateDto.getLongitudeStart();
 
-		double latitudeEnd = coordinateDto.getLatitudeEnd();
-		double longitudeEnd = coordinateDto.getLongitudeEnd();
-		String query = "SELECT p FROM Place p WHERE (p.address.latitude BETWEEN :latitudeStart AND :latitudeEnd)"
-			+ "AND (p.address.longitude BETWEEN :longitudeStart AND :longitudeEnd)";
-		return em.createQuery(query, Place.class)
-			.setParameter("latitudeStart", latitudeStart)
-			.setParameter("latitudeEnd", latitudeEnd)
-			.setParameter("longitudeStart", longitudeStart)
-			.setParameter("longitudeEnd", longitudeEnd)
-			.getResultList();
-	}
+        double latitudeEnd = coordinateDto.getLatitudeEnd();
+        double longitudeEnd = coordinateDto.getLongitudeEnd();
+        String query = "SELECT p FROM Place p WHERE (p.address.latitude BETWEEN :latitudeStart AND :latitudeEnd)"
+                + "AND (p.address.longitude BETWEEN :longitudeStart AND :longitudeEnd)";
+        return em.createQuery(query, Place.class)
+                .setParameter("latitudeStart", latitudeStart)
+                .setParameter("latitudeEnd", latitudeEnd)
+                .setParameter("longitudeStart", longitudeStart)
+                .setParameter("longitudeEnd", longitudeEnd)
+                .getResultList();
+    }
 }
