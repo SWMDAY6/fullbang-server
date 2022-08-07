@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import day6.fullbang.domain.Place;
-import day6.fullbang.dto.CoordinateRangeDto;
+import day6.fullbang.dto.request.CoordinateRangeDto;
 import day6.fullbang.dto.response.PlaceResponseDto;
 import day6.fullbang.service.PlaceService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,19 @@ public class PlaceController {
 
         return responsePlaces;
 
+    }
+
+    @GetMapping("/search/{keyword}")
+    public List<PlaceResponseDto> readPlacesByPlaceName(@PathVariable("keyword") String keyword) {
+        List<Place> placesByPlaceName = placeService.findPlacesByPlaceName(keyword);
+
+        List<PlaceResponseDto> responsePlaces = new ArrayList<>();
+        for (Place place : placesByPlaceName) {
+            PlaceResponseDto item = new PlaceResponseDto(place);
+            responsePlaces.add(item);
+        }
+
+        return responsePlaces;
     }
 
 }

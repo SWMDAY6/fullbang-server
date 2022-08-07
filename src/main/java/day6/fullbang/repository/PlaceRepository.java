@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
 import day6.fullbang.domain.Place;
-import day6.fullbang.dto.CoordinateRangeDto;
+import day6.fullbang.dto.request.CoordinateRangeDto;
 import lombok.RequiredArgsConstructor;
 
 @Repository
@@ -34,6 +34,14 @@ public class PlaceRepository {
                 .setParameter("latitudeEnd", latitudeEnd)
                 .setParameter("longitudeStart", longitudeStart)
                 .setParameter("longitudeEnd", longitudeEnd)
+                .getResultList();
+    }
+
+    public List<Place> findPlacesByPlaceName(String placeName) {
+        String query = "SELECT p FROM Place p WHERE p.name LIKE :placeNameQuery";
+
+        return em.createQuery(query, Place.class)
+                .setParameter("placeNameQuery", "%" + placeName + "%")
                 .getResultList();
     }
 }
