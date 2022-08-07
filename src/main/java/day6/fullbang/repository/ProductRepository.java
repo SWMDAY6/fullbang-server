@@ -3,12 +3,14 @@ package day6.fullbang.repository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
 
+import day6.fullbang.domain.Product;
 import day6.fullbang.dto.product.PriceInfoDto;
 import day6.fullbang.dto.request.MarketPriceCondition;
 import lombok.RequiredArgsConstructor;
@@ -25,20 +27,25 @@ public class ProductRepository {
             .atStartOfDay();
         LocalDateTime checkOutDateTime = checkInDateTime.plusDays(2);
 
-        return em.createQuery(
-            "SELECT product FROM Product product INNER JOIN Room room ON product.room = room "
-                + "INNER JOIN Place place ON room.place = place "
-                + "WHERE place.address.addressCode LIKE :addressCodePattern "
-                + "AND place.type = :placeType "
-                + "AND room.maximumCapacity >= :capacity "
-                + "AND product.checkInDateTime >= :checkInDateTime "
-                + "AND product.checkOutDateTime < :checkOutDateTime ", PriceInfoDto.class) //TODO add parking_avail condition
+        List<Product> products = em.createQuery(
+            "SELECT p FROM Product p "
+                + "WHERE p.room.place.address.addressCode LIKE :addressCodePattern "
+                + "AND p.room.place.type = :placeType "
+                + "AND p.room.maximumCapacity >= :capacity "
+                + "AND p.checkInDateTime >= :checkInDateTime "
+                + "AND p.checkOutDateTime < :checkOutDateTime ", Product.class) //TODO add parking_avail condition
             .setParameter("addressCodePattern", marketPriceCondition.getAddressCodeHead() + "%")
             .setParameter("placeType", marketPriceCondition.getPlaceType())
             .setParameter("capacity", marketPriceCondition.getCapacity())
             .setParameter("checkInDateTime", checkInDateTime)
             .setParameter("checkOutDateTime", checkOutDateTime)
             .getResultList();
+
+        List<PriceInfoDto> priceInfos = new ArrayList<>();
+
+        products.forEach(product -> priceInfos.add(new PriceInfoDto(product.getPrice())));
+
+        return priceInfos;
     }
 
 }
