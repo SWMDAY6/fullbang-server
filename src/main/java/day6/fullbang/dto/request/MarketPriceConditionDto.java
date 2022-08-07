@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class MarketPriceCondition {
+public class MarketPriceConditionDto {
 
     private PlaceType placeType;
     private String date;

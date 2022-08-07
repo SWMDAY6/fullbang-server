@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import day6.fullbang.domain.Product;
 import day6.fullbang.dto.product.PriceInfoDto;
-import day6.fullbang.dto.request.MarketPriceCondition;
+import day6.fullbang.dto.request.MarketPriceConditionDto;
 import lombok.RequiredArgsConstructor;
 
 @Repository
@@ -21,10 +21,10 @@ public class ProductRepository {
 
     private final EntityManager em;
 
-    public List<PriceInfoDto> getPriceInfoByAddressCode(MarketPriceCondition marketPriceCondition,
+    public List<PriceInfoDto> getPriceInfoByAddressCode(MarketPriceConditionDto marketPriceConditionDto,
         String addressCodeHead) {
 
-        LocalDateTime checkInDateTime = LocalDate.parse(marketPriceCondition.getDate(), DateTimeFormatter.ISO_DATE)
+        LocalDateTime checkInDateTime = LocalDate.parse(marketPriceConditionDto.getDate(), DateTimeFormatter.ISO_DATE)
             .atStartOfDay();
         LocalDateTime checkOutDateTime = checkInDateTime.plusDays(2);
 
@@ -36,8 +36,8 @@ public class ProductRepository {
                 + "AND p.checkInDateTime >= :checkInDateTime "
                 + "AND p.checkOutDateTime < :checkOutDateTime ", Product.class) //TODO add parking_avail condition
             .setParameter("addressCodePattern", addressCodeHead + "%")
-            .setParameter("placeType", marketPriceCondition.getPlaceType())
-            .setParameter("capacity", marketPriceCondition.getCapacity())
+            .setParameter("placeType", marketPriceConditionDto.getPlaceType())
+            .setParameter("capacity", marketPriceConditionDto.getCapacity())
             .setParameter("checkInDateTime", checkInDateTime)
             .setParameter("checkOutDateTime", checkOutDateTime)
             .getResultList();

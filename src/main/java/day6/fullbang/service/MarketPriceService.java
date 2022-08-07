@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import day6.fullbang.dto.product.PriceInfoDto;
 import day6.fullbang.dto.response.MarketPriceDto;
-import day6.fullbang.dto.request.MarketPriceCondition;
+import day6.fullbang.dto.request.MarketPriceConditionDto;
 import day6.fullbang.util.MarketPriceCalculator;
 import lombok.RequiredArgsConstructor;
 
@@ -17,9 +17,9 @@ public class MarketPriceService {
 
     private final ProductService productService;
 
-    public MarketPriceDto getByAddressCode(MarketPriceCondition marketPriceCondition, String addressCodeHead) {
+    public MarketPriceDto getByAddressCode(MarketPriceConditionDto marketPriceConditionDto, String addressCodeHead) {
 
-        List<PriceInfoDto> targetProducts = productService.getPriceInfoByAddressCode(marketPriceCondition, addressCodeHead);
+        List<PriceInfoDto> targetProducts = productService.getPriceInfoByAddressCode(marketPriceConditionDto, addressCodeHead);
 
         List<Long> prices = new ArrayList<>();
         targetProducts.forEach(priceInfo -> prices.add(priceInfo.getPrice()));
