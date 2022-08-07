@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import day6.fullbang.domain.Place;
-import day6.fullbang.dto.CoordinateRangeDto;
+import day6.fullbang.dto.request.CoordinateRangeDto;
 import day6.fullbang.dto.response.PlaceResponseDto;
 import day6.fullbang.service.PlaceService;
 import lombok.RequiredArgsConstructor;
@@ -46,4 +46,5 @@ public class PlaceController {
 
         return responsePlaces;
     }
+
 }

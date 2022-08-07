@@ -1,4 +1,4 @@
-package day6.fullbang.dto;
+package day6.fullbang.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

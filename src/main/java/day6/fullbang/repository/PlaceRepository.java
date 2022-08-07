@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
 import day6.fullbang.domain.Place;
-import day6.fullbang.dto.CoordinateRangeDto;
+import day6.fullbang.dto.request.CoordinateRangeDto;
 import lombok.RequiredArgsConstructor;
 
 @Repository
