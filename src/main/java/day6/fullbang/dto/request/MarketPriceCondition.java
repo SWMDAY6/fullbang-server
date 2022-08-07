@@ -1,15 +1,16 @@
 package day6.fullbang.dto.request;
 
+import day6.fullbang.domain.PlaceType;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class MarketPriceCondition {
 
-    private final String addressCodeHead;
-    private final String placeType;
-    private final String date;
-    private final Integer capacity;
-    private final Boolean parkingAvailability;
+    private String addressCodeHead;
+    private PlaceType placeType;
+    private String date;
+    private Integer capacity;
+    private Boolean parkingAvailability;
 }
