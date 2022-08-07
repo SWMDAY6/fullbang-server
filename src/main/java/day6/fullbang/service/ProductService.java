@@ -15,7 +15,8 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public List<PriceInfoDto> getPriceInfoByAddressCode(MarketPriceConditionDto marketPriceConditionDto, String addressCodeHead) {
+    public List<PriceInfoDto> getPriceInfoByAddressCode(MarketPriceConditionDto marketPriceConditionDto,
+        String addressCodeHead) {
         return productRepository.getPriceInfoByAddressCode(marketPriceConditionDto, addressCodeHead);
     }
 }
