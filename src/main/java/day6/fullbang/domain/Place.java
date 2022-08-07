@@ -24,34 +24,34 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Place {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "place_id")
-	private Long id;
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
+    private final List<Room> rooms = new ArrayList<>();
 
-	@Column(name = "place_name")
-	private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "place_id")
+    private Long id;
 
-	@Column(name = "place_type")
-	@Enumerated(EnumType.STRING)
-	private PlaceType type;
+    @Column(name = "place_name")
+    private String name;
 
-	@Embedded
-	private Address address;
+    @Column(name = "place_type")
+    @Enumerated(EnumType.STRING)
+    private PlaceType type;
 
-	private String contactInfo;
+    @Embedded
+    private Address address;
 
-	@Column(columnDefinition = "LONGTEXT")
-	private String detailInfo;
+    private String contactInfo;
 
-	private Boolean parkingAvailability;
+    @Column(columnDefinition = "LONGTEXT")
+    private String detailInfo;
 
-	@Column(unique = true)
-	private Long yanoljaId;
+    private Boolean parkingAvailability;
 
-	@Column(unique = true)
-	private Long yeogieottaeId;
+    @Column(unique = true)
+    private Long yanoljaId;
 
-	@OneToMany(mappedBy = "place", cascade = CascadeType.ALL)
-	private final List<Room> rooms = new ArrayList<>();
+    @Column(unique = true)
+    private Long yeogieottaeId;
 }

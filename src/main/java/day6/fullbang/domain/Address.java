@@ -9,20 +9,20 @@ import lombok.Getter;
 @Getter
 public class Address {
 
-	private String addressFullName;
+    private String addressFullName;
 
-	@Column(name = "region_1depth_name")
-	private String region1DepthName;
+    @Column(name = "region_1depth_name")
+    private String region1DepthName;
 
-	@Column(name = "region_2depth_name")
-	private String region2DepthName;
+    @Column(name = "region_2depth_name")
+    private String region2DepthName;
 
-	@Column(name = "region_3depth_name")
-	private String region3DepthName;
+    @Column(name = "region_3depth_name")
+    private String region3DepthName;
 
-	private String addressCode;
+    private String addressCode;
 
-	private double latitude;
+    private Double latitude;
 
-	private double longitude;
+    private Double longitude;
 }
