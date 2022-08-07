@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MarketPriceCondition {
 
-    private String addressCodeHead;
     private PlaceType placeType;
     private String date;
     private Integer capacity;

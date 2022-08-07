@@ -21,7 +21,8 @@ public class ProductRepository {
 
     private final EntityManager em;
 
-    public List<PriceInfoDto> getPriceInfoByAddressCode(MarketPriceCondition marketPriceCondition) {
+    public List<PriceInfoDto> getPriceInfoByAddressCode(MarketPriceCondition marketPriceCondition,
+        String addressCodeHead) {
 
         LocalDateTime checkInDateTime = LocalDate.parse(marketPriceCondition.getDate(), DateTimeFormatter.ISO_DATE)
             .atStartOfDay();
@@ -34,7 +35,7 @@ public class ProductRepository {
                 + "AND p.room.maximumCapacity >= :capacity "
                 + "AND p.checkInDateTime >= :checkInDateTime "
                 + "AND p.checkOutDateTime < :checkOutDateTime ", Product.class) //TODO add parking_avail condition
-            .setParameter("addressCodePattern", marketPriceCondition.getAddressCodeHead() + "%")
+            .setParameter("addressCodePattern", addressCodeHead + "%")
             .setParameter("placeType", marketPriceCondition.getPlaceType())
             .setParameter("capacity", marketPriceCondition.getCapacity())
             .setParameter("checkInDateTime", checkInDateTime)

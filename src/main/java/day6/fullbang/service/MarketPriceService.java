@@ -17,9 +17,9 @@ public class MarketPriceService {
 
     private final ProductService productService;
 
-    public MarketPriceDto getByAddressCode(MarketPriceCondition marketPriceCondition) {
+    public MarketPriceDto getByAddressCode(MarketPriceCondition marketPriceCondition, String addressCodeHead) {
 
-        List<PriceInfoDto> targetProducts = productService.getPriceInfoByAddressCode(marketPriceCondition);
+        List<PriceInfoDto> targetProducts = productService.getPriceInfoByAddressCode(marketPriceCondition, addressCodeHead);
 
         List<Long> prices = new ArrayList<>();
         targetProducts.forEach(priceInfo -> prices.add(priceInfo.getPrice()));
