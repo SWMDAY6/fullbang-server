@@ -22,4 +22,8 @@ public class PlaceService {
     public List<Place> findPlacesByCoordinate(CoordinateRangeDto coordinateRangeDto) {
         return placeRepository.findPlacesByCoordinate(coordinateRangeDto);
     }
+
+    public List<Place> findPlacesByPlaceName(String placeName) {
+        return placeRepository.findPlacesByPlaceName(placeName);
+    }
 }

@@ -36,4 +36,12 @@ public class PlaceRepository {
                 .setParameter("longitudeEnd", longitudeEnd)
                 .getResultList();
     }
+
+    public List<Place> findPlacesByPlaceName(String placeName) {
+        String query = "SELECT p FROM Place p WHERE p.name LIKE :placeNameQuery";
+
+        return em.createQuery(query, Place.class)
+                .setParameter("placeNameQuery", "%" + placeName + "%")
+                .getResultList();
+    }
 }

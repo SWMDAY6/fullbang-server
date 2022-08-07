@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,4 +34,16 @@ public class PlaceController {
 
     }
 
+    @GetMapping("/search/{keyword}")
+    public List<PlaceResponseDto> readPlacesByPlaceName(@PathVariable("keyword") String keyword) {
+        List<Place> placesByPlaceName = placeService.findPlacesByPlaceName(keyword);
+
+        List<PlaceResponseDto> responsePlaces = new ArrayList<>();
+        for (Place place : placesByPlaceName) {
+            PlaceResponseDto item = new PlaceResponseDto(place);
+            responsePlaces.add(item);
+        }
+
+        return responsePlaces;
+    }
 }
