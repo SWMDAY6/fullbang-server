@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class FullbangApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FullbangApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FullbangApplication.class, args);
+    }
 
 }
