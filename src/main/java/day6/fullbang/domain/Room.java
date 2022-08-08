@@ -14,8 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+
 @Entity
 @Table(name = "room")
+@Getter
 public class Room {
 
     @Id
