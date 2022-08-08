@@ -15,7 +15,6 @@ import day6.fullbang.dto.response.PlaceResponseDto;
 import day6.fullbang.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*") // TODO modify
 @RestController
 @RequiredArgsConstructor
 public class PlaceController {

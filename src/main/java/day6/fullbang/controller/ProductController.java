@@ -11,7 +11,6 @@ import day6.fullbang.dto.response.MarketPriceDto;
 import day6.fullbang.service.MarketPriceService;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*") // TODO modify
 @RestController
 @RequiredArgsConstructor
 public class ProductController {
