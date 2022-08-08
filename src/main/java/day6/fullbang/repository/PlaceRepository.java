@@ -43,8 +43,8 @@ public class PlaceRepository {
     public List<Place> findPlacesByOption(FilterOptionRequestDto filterOptionRequestDto) {
 
         String query = "SELECT DISTINCT p FROM Place p "
-                + "WHERE p IN (SELECT r FROM Room r JOIN r.products pr "
-                + "WHERE pr.checkInDateTime = :checkInDate ";
+            + "WHERE p IN (SELECT r FROM Room r JOIN r.products pr "
+            + "WHERE pr.checkInDateTime = :checkInDate ";
 
         if (filterOptionRequestDto.getPlaceType() != null) {
             query += "AND p.type = :placeType ";
@@ -60,10 +60,12 @@ public class PlaceRepository {
         LocalDate date = filterOptionRequestDto.getCheckInDateTime();
 
         return em.createQuery(query, Place.class)
-                .setParameter("placeType", filterOptionRequestDto.getPlaceType())
-                .setParameter("parkingAvailability", filterOptionRequestDto.getParkingAvailability())
-                .setParameter("maximumCapacity", filterOptionRequestDto.getMaximumCapacity())
-                .setParameter("checkInDate", date.atStartOfDay())
+            .setParameter("placeType", filterOptionRequestDto.getPlaceType())
+            .setParameter("parkingAvailability", filterOptionRequestDto.getParkingAvailability())
+            .setParameter("maximumCapacity", filterOptionRequestDto.getMaximumCapacity())
+            .setParameter("checkInDate", date.atStartOfDay())
+            .getResultList();
+    }
 
     public List<Place> findPlacesByPlaceName(String placeName) {
         String query = "SELECT p FROM Place p WHERE p.name LIKE :placeNameQuery";
