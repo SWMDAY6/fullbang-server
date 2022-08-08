@@ -2,6 +2,7 @@ package day6.fullbang.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import day6.fullbang.domain.Place;
 import day6.fullbang.dto.CoordinateRangeDto;
+import day6.fullbang.dto.request.FilterOptionRequestDto;
 import day6.fullbang.dto.response.PlaceResponseDto;
 import day6.fullbang.service.PlaceService;
 import lombok.RequiredArgsConstructor;
@@ -33,4 +35,13 @@ public class PlaceController {
 
     }
 
+    @GetMapping("/places/option")
+    public List<PlaceResponseDto> readFilteredPlaces(@RequestBody FilterOptionRequestDto filterOptionRequestDto) {
+        List<Place> filteredPlaces = placeService.findPlacesByOption(filterOptionRequestDto);
+        List<PlaceResponseDto> filteredResponsePlaces = filteredPlaces.stream()
+                .map(p -> new PlaceResponseDto(p))
+                .collect(Collectors.toList());
+
+        return filteredResponsePlaces;
+    }
 }
