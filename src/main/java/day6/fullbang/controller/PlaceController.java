@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +21,7 @@ public class PlaceController {
 
     private final PlaceService placeService;
 
-    @GetMapping("/places")
+    @PostMapping("/places")
     public List<PlaceResponseDto> readAllPlaces(@RequestBody CoordinateRangeDto coordinateRangeDto) {
         List<Place> placesByCoordinate = placeService.findPlacesByCoordinate(coordinateRangeDto);
 
@@ -35,7 +35,7 @@ public class PlaceController {
 
     }
 
-    @GetMapping("/places/option")
+    @PostMapping("/places/option")
     public List<PlaceResponseDto> readFilteredPlaces(@RequestBody FilterOptionRequestDto filterOptionRequestDto) {
         List<Place> filteredPlaces = placeService.findPlacesByOption(filterOptionRequestDto);
         List<PlaceResponseDto> filteredResponsePlaces = filteredPlaces.stream()
