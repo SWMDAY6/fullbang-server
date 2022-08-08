@@ -38,7 +38,7 @@ public class Product {
     @Column(name = "product_type")
     private String type;
 
-    private Integer price;
+    private Long price;
 
     private Boolean isSoldOut;
 
