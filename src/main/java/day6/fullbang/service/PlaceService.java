@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import day6.fullbang.domain.Place;
 import day6.fullbang.dto.request.CoordinateRangeDto;
+import day6.fullbang.dto.request.FilterOptionRequestDto;
+
 import day6.fullbang.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +25,12 @@ public class PlaceService {
         return placeRepository.findPlacesByCoordinate(coordinateRangeDto);
     }
 
+    public List<Place> findPlacesByOption(FilterOptionRequestDto filterOptionRequestDto) {
+        return placeRepository.findPlacesByOption(filterOptionRequestDto);
+    }
+    
     public List<Place> findPlacesByPlaceName(String placeName) {
         return placeRepository.findPlacesByPlaceName(placeName);
     }
+    
 }
