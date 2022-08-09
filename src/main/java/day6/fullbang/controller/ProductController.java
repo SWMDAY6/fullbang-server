@@ -26,12 +26,13 @@ public class ProductController {
         return marketPriceService.getByAddressCode(marketPriceConditionDto, addressCodeHead);
     }
 
-    @GetMapping("/product/inRange/marketPrice")
+    @GetMapping("/product/inRange/marketPrice/{regionDepth}")
     public List<MarketPriceDto> getMarketPriceByCoordinateRange(
         @RequestBody MarketPriceConditionDto marketPriceConditionDto,
-        CoordinateRangeDto coordinateRangeDto) {
+        @PathVariable CoordinateRangeDto coordinateRangeDto,
+        @PathVariable int regionDepth) {
 
-        return marketPriceService.getByCoordinateRange(marketPriceConditionDto, CoordinateRangeDto);
+        return marketPriceService.getByCoordinateRange(marketPriceConditionDto, coordinateRangeDto, regionDepth);
     }
 
 }
