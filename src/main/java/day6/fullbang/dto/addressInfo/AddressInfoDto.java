@@ -20,8 +20,8 @@ public class AddressInfoDto {
     private final Double latitude;
     private final Double longitude;
 
-    public AddressInfoDto(AddressInfo addressInfo) {
-        addressCodeHead = addressInfo.getAddressCodeHead();
+    public AddressInfoDto(AddressInfo addressInfo, int regionDepth) {
+        addressCodeHead = addressInfo.getAddressCodeHead(regionDepth);
         region1DepthName = addressInfo.getRegion1DepthName();
         region2DepthName = addressInfo.getRegion2DepthName();
         region3DepthName = addressInfo.getRegion3DepthName();

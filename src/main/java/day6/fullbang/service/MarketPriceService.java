@@ -10,7 +10,6 @@ import day6.fullbang.dto.product.PriceInfoDto;
 import day6.fullbang.dto.request.CoordinateRangeDto;
 import day6.fullbang.dto.request.MarketPriceConditionDto;
 import day6.fullbang.dto.response.MarketPriceDto;
-import day6.fullbang.repository.AddressInfoRepository;
 import day6.fullbang.util.MarketPriceCalculator;
 import lombok.RequiredArgsConstructor;
 
@@ -38,7 +37,8 @@ public class MarketPriceService {
     public List<MarketPriceDto> getByCoordinateRange(MarketPriceConditionDto marketPriceConditionDto,
         CoordinateRangeDto coordinateRangeDto, int regionDepth) {
 
-        List<AddressInfoDto> addressInfos = addressInfoService.getAddressInfoByCoordinateRange(coordinateRangeDto);
+        List<AddressInfoDto> addressInfos = addressInfoService.getAddressInfoByCoordinateRange(coordinateRangeDto,
+            regionDepth);
 
         List<MarketPriceDto> resultList = new ArrayList<>();
 

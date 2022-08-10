@@ -18,7 +18,7 @@ public class AddressInfoRepository {
     private final EntityManager em;
 
     public List<AddressInfoDto> getAddressInfoByCoordinateRange(Double latitudeStart, Double latitudeEnd,
-        Double longitudeStart, Double longitudeEnd) {
+        Double longitudeStart, Double longitudeEnd, int regionDepth) {
 
         List<AddressInfoDto> result = new ArrayList<>();
 
@@ -31,7 +31,7 @@ public class AddressInfoRepository {
             .setParameter("longitudeStart", longitudeStart)
             .setParameter("longitudeEnd", longitudeEnd).getResultList();
 
-        addressInfos.forEach(addressInfo -> result.add(new AddressInfoDto(addressInfo)));
+        addressInfos.forEach(addressInfo -> result.add(new AddressInfoDto(addressInfo, regionDepth)));
 
         return result;
     }
