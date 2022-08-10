@@ -41,8 +41,8 @@ public class ProductController {
         MarketPriceConditionDto marketPriceConditionDto = new MarketPriceConditionDto(placeType, date, capacity,
             parkingAvailability);
 
-        CoordinateRangeDto coordinateRangeDto = new CoordinateRangeDto(latitudeStart, latitudeEnd, longitudeStart,
-            longitudeEnd);
+        CoordinateRangeDto coordinateRangeDto = new CoordinateRangeDto(longitudeStart, latitudeStart, longitudeEnd,
+            latitudeEnd);
 
         return marketPriceService.getByCoordinateRange(marketPriceConditionDto, coordinateRangeDto, regionDepth);
     }
