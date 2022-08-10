@@ -15,7 +15,8 @@ public class AddressInfoService {
 
     private final AddressInfoRepository addressInfoRepository;
 
-    public List<AddressInfoDto> getAddressInfoByCoordinateRange(CoordinateRangeDto coordinateRangeDto, int regionDepth) {
+    public List<AddressInfoDto> getAddressInfoByCoordinateRange(CoordinateRangeDto coordinateRangeDto,
+        int regionDepth) {
 
         return addressInfoRepository.getAddressInfoByCoordinateRange(coordinateRangeDto.getLatitudeStart(),
             coordinateRangeDto.getLatitudeEnd(), coordinateRangeDto.getLongitudeStart(),
