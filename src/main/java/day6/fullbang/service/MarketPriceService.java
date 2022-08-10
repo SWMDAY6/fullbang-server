@@ -42,7 +42,7 @@ public class MarketPriceService {
 
         addressInfos.forEach(
             addressInfo -> resultList.add(
-                getByAddressCode(marketPriceConditionDto, addressInfo.getAddressCodeHead(regionDepth))));
+                getByAddressCode(marketPriceConditionDto, addressInfo.getAddressCodeHead())));
 
         return resultList;
     }
