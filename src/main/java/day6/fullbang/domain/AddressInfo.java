@@ -9,32 +9,34 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
 @Table(name = "address_info")
 @AllArgsConstructor
+@NoArgsConstructor
 public class AddressInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_info_id")
-    private final Long id;
+    private Long id;
 
     @Column(name = "region_1depth_name")
-    private final String region1DepthName;
+    private String region1DepthName;
     @Column(name = "region_2depth_name")
-    private final String region2DepthName;
+    private String region2DepthName;
     @Column(name = "region_3depth_name")
-    private final String region3DepthName;
+    private String region3DepthName;
     @Column(name = "region_1depth_code")
-    private final String region1DepthAddressCode;
+    private String region1DepthAddressCode;
     @Column(name = "region_2depth_code")
-    private final String region2DepthAddressCode;
+    private String region2DepthAddressCode;
     @Column(name = "region_3depth_code")
-    private final String region3DepthAddressCode;
-    private final Double latitude;
-    private final Double longitude;
+    private String region3DepthAddressCode;
+    private Double latitude;
+    private Double longitude;
 
     public String getAddressCodeHead(int regionDepth) {
 
