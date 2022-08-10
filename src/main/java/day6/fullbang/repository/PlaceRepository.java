@@ -1,5 +1,6 @@
 package day6.fullbang.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import day6.fullbang.domain.Place;
 import day6.fullbang.dto.request.CoordinateRangeDto;
+import day6.fullbang.dto.request.FilterOptionRequestDto;
+
 import lombok.RequiredArgsConstructor;
 
 @Repository
@@ -34,6 +37,33 @@ public class PlaceRepository {
             .setParameter("latitudeEnd", latitudeEnd)
             .setParameter("longitudeStart", longitudeStart)
             .setParameter("longitudeEnd", longitudeEnd)
+            .getResultList();
+    }
+
+    public List<Place> findPlacesByOption(FilterOptionRequestDto filterOptionRequestDto) {
+
+        String query = "SELECT DISTINCT p FROM Place p "
+            + "WHERE p IN (SELECT r FROM Room r JOIN r.products pr "
+            + "WHERE pr.checkInDateTime = :checkInDate ";
+
+        if (filterOptionRequestDto.getPlaceType() != null) {
+            query += "AND p.type = :placeType ";
+        }
+        if (filterOptionRequestDto.getParkingAvailability() != null) {
+            query += "AND p.parkingAvailability = :parkingAvailability ";
+        }
+        if (filterOptionRequestDto.getMaximumCapacity() != null) {
+            query += "AND r.maximumCapacity >= :maximumCapacity ";
+        }
+        query += ")";
+
+        LocalDate date = filterOptionRequestDto.getCheckInDateTime();
+
+        return em.createQuery(query, Place.class)
+            .setParameter("placeType", filterOptionRequestDto.getPlaceType())
+            .setParameter("parkingAvailability", filterOptionRequestDto.getParkingAvailability())
+            .setParameter("maximumCapacity", filterOptionRequestDto.getMaximumCapacity())
+            .setParameter("checkInDate", date.atStartOfDay())
             .getResultList();
     }
 

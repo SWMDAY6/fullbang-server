@@ -9,22 +9,22 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PlaceResponseDto {
-    private long id;
-    private String name;
-    private PlaceType type;
+    private Long placeId;
+    private String placeName;
+    private PlaceType placeType;
 
     private String addressFullName;
     private String region1DepthName;
     private String region2DepthName;
     private String region3DepthName;
     private String addressCode;
-    private double latitude;
-    private double longitude;
+    private Double latitude;
+    private Double longitude;
 
     public PlaceResponseDto(Place place) {
-        this.id = place.getId();
-        this.name = place.getName();
-        this.type = place.getType();
+        this.placeId = place.getId();
+        this.placeName = place.getName();
+        this.placeType = place.getType();
 
         Address address = place.getAddress();
         this.addressFullName = address.getAddressFullName();
@@ -35,5 +35,5 @@ public class PlaceResponseDto {
         this.latitude = address.getLatitude();
         this.longitude = address.getLongitude();
     }
-
+    
 }

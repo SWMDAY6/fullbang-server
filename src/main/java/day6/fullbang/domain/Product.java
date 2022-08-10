@@ -16,9 +16,9 @@ import javax.persistence.Table;
 
 import lombok.Getter;
 
-@Getter
 @Entity
 @Table(name = "product")
+@Getter
 public class Product {
 
     @Id
