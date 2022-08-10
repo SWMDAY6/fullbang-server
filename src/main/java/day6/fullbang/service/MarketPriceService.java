@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import day6.fullbang.dto.addressInfo.AddressInfoDto;
 import day6.fullbang.dto.product.PriceInfoDto;
 import day6.fullbang.dto.request.CoordinateRangeDto;
 import day6.fullbang.dto.request.MarketPriceConditionDto;
@@ -35,9 +36,7 @@ public class MarketPriceService {
     public List<MarketPriceDto> getByCoordinateRange(MarketPriceConditionDto marketPriceConditionDto,
         CoordinateRangeDto coordinateRangeDto, int regionDepth) {
 
-        List<AddressInfoDto> addressInfos = AddressInfoService.getAddressInfoByCoordinateRange(
-            coordinateRangeDto.getLatitudeStart(), coordinateRangeDto.getLatitudeEnd(),
-            coordinateRangeDto.getLongitudeStart(), coordinateRangeDto.getLongitudeEnd());
+        List<AddressInfoDto> addressInfos = AddressInfoService.getAddressInfoByCoordinateRange(coordinateRangeDto);
 
         List<MarketPriceDto> resultList = new ArrayList<>();
 
