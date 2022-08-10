@@ -8,7 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "address_info")
 @AllArgsConstructor
