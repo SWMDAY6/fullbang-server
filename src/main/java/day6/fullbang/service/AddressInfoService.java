@@ -18,8 +18,11 @@ public class AddressInfoService {
     public List<AddressInfoDto> getAddressInfoByCoordinateRange(CoordinateRangeDto coordinateRangeDto,
         int regionDepth) {
 
-        return addressInfoRepository.getAddressInfoByCoordinateRange(coordinateRangeDto.getLatitudeStart(),
+        List<AddressInfoDto> addressInfoByCoordinateRange = addressInfoRepository.getAddressInfoByCoordinateRange(
+            coordinateRangeDto.getLatitudeStart(),
             coordinateRangeDto.getLatitudeEnd(), coordinateRangeDto.getLongitudeStart(),
             coordinateRangeDto.getLongitudeEnd(), regionDepth);
+
+        return addressInfoByCoordinateRange;
     }
 }

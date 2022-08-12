@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import day6.fullbang.domain.Place;
 import day6.fullbang.dto.request.CoordinateRangeDto;
 import day6.fullbang.dto.request.FilterOptionRequestDto;
-
 import lombok.RequiredArgsConstructor;
 
 @Repository

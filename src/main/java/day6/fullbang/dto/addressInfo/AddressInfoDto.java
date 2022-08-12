@@ -1,7 +1,5 @@
 package day6.fullbang.dto.addressInfo;
 
-import javax.persistence.Column;
-
 import day6.fullbang.domain.AddressInfo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +23,9 @@ public class AddressInfoDto {
         region1DepthName = addressInfo.getRegion1DepthName();
         region2DepthName = addressInfo.getRegion2DepthName();
         region3DepthName = addressInfo.getRegion3DepthName();
-        region1DepthAddressCode = addressInfo.getRegion1DepthAddressCode();
-        region2DepthAddressCode = addressInfo.getRegion2DepthAddressCode();
-        region3DepthAddressCode = addressInfo.getRegion3DepthAddressCode();
+        region1DepthAddressCode = addressInfo.getAddressCode().getRegion1DepthAddressCode();
+        region2DepthAddressCode = addressInfo.getAddressCode().getRegion2DepthAddressCode();
+        region3DepthAddressCode = addressInfo.getAddressCode().getRegion3DepthAddressCode();
         latitude = addressInfo.getLatitude();
         longitude = addressInfo.getLongitude();
     }
