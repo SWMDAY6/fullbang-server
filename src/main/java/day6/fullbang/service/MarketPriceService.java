@@ -44,7 +44,6 @@ public class MarketPriceService {
         addressInfos.getAddressInfoDtos().forEach(
             addressInfo -> {
                 resultList.add(getByAddressCode(marketPriceConditionDto, addressInfo.getAddressCodeHead()));
-                System.out.println(addressInfo.getAddressCodeHead());
             });
 
         return resultList;
