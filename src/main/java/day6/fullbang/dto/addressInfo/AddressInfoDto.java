@@ -1,7 +1,5 @@
 package day6.fullbang.dto.addressInfo;
 
-import javax.persistence.Column;
-
 import day6.fullbang.domain.AddressInfo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
