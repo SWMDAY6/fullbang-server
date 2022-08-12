@@ -31,7 +31,13 @@ public class AddressInfoRepository {
             .setParameter("longitudeStart", longitudeStart)
             .setParameter("longitudeEnd", longitudeEnd).getResultList();
 
-        addressInfos.forEach(addressInfo -> result.add(new AddressInfoDto(addressInfo, regionDepth)));
+        addressInfos.forEach(addressInfo -> {
+            try {
+                result.add(new AddressInfoDto(addressInfo, regionDepth));
+            } catch (NullPointerException e) {
+                return;
+            }
+        });
 
         return result;
     }
