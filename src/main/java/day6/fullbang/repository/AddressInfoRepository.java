@@ -24,8 +24,8 @@ public class AddressInfoRepository {
 
         List<AddressInfo> addressInfos = em.createQuery(
             "SELECT a FROM AddressInfo a "
-                + "WHERE a.latitude BETWEEN :latitudeStart AND :latitudeEnd "
-                + "AND a.longitude BETWEEN :longitudeStart AND :longitudeEnd", AddressInfo.class)
+                + "WHERE (a.latitude BETWEEN :latitudeStart AND :latitudeEnd) "
+                + "AND (a.longitude BETWEEN :longitudeStart AND :longitudeEnd)", AddressInfo.class)
             .setParameter("latitudeStart", latitudeStart)
             .setParameter("latitudeEnd", latitudeEnd)
             .setParameter("longitudeStart", longitudeStart)

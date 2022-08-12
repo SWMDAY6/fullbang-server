@@ -5,7 +5,6 @@ import java.util.List;
 
 import day6.fullbang.dto.addressInfo.AddressInfoDto;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 public class AddressInfos {
 
@@ -28,7 +27,7 @@ public class AddressInfos {
         this.addressInfoDtos = new ArrayList<>();
 
         addressInfoDtos.forEach(addressInfoDto -> {
-            if (!this.addressCodeHeadExist(addressInfoDto.getAddressCodeHead())) {
+            if (!addressCodeHeadExist(addressInfoDto.getAddressCodeHead())) {
                 this.addressInfoDtos.add(addressInfoDto);
             }
         });
