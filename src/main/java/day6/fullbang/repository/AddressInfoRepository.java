@@ -48,16 +48,16 @@ public class AddressInfoRepository {
         int regionDepth = 1;
 
         if (addressCodeHead.length() >= 2) {
-            queryString += " WHERE (a.region_1depth_code = ";
+            queryString += " WHERE a.region_1depth_code = ";
             queryString += addressCodeHead.substring(0, 2);
         }
         if (addressCodeHead.length() >= 5) {
-            queryString += " AND (a.region_2depth_code = ";
+            queryString += " AND a.region_2depth_code = ";
             queryString += addressCodeHead.substring(2, 5);
             regionDepth++;
         }
         if (addressCodeHead.length() >= 8) {
-            queryString += " AND (a.region_3depth_code = ";
+            queryString += " AND a.region_3depth_code = ";
             queryString += addressCodeHead.substring(5, 8);
             regionDepth++;
         }
