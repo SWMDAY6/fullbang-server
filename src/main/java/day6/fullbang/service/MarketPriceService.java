@@ -30,7 +30,8 @@ public class MarketPriceService {
         Double mean = MarketPriceCalculator.getMean(prices);
         Double confidenceIntervalOffset = MarketPriceCalculator.getConfidenceIntervalOffset(prices);
 
-        return new MarketPriceDto(mean, mean - confidenceIntervalOffset, mean + confidenceIntervalOffset);
+        return new MarketPriceDto(mean, mean - confidenceIntervalOffset, mean + confidenceIntervalOffset,
+            marketPriceConditionDto.getPlaceType());
     }
 
     public List<MarketPriceDto> getByCoordinateRange(MarketPriceConditionDto marketPriceConditionDto,
