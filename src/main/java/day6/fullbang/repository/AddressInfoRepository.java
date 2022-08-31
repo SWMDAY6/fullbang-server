@@ -62,7 +62,7 @@ public class AddressInfoRepository {
             regionDepth++;
         }
 
-        AddressInfo addressInfo = (AddressInfo)em.createQuery(queryString, AddressInfo.class);
+        AddressInfo addressInfo = em.createQuery(queryString, AddressInfo.class).getResultList().get(0);
 
         return new AddressInfoDto(addressInfo, regionDepth);
     }
