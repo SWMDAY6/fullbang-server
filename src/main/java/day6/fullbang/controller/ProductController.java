@@ -1,5 +1,7 @@
 package day6.fullbang.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,10 +34,19 @@ public class ProductController {
     }
 
     @GetMapping("/product/{addressCodeHead}/marketPrice")
-    public List<MarketPriceDto> getAllMarketPriceByAddressCode(@RequestParam String date, @RequestParam Integer capacity,
+    public List<MarketPriceDto> getAllMarketPriceByAddressCode(@RequestParam String date,
+        @RequestParam Integer capacity,
         @RequestParam Boolean parkingAvailability, @PathVariable(name = "addressCodeHead") String addressCodeHead) {
 
-        // TODO implement return market price dto list
+        List<MarketPriceDto> result = new ArrayList<>();
+
+        Arrays.asList(PlaceType.values()).forEach(placeType -> {
+            MarketPriceConditionDto marketPriceConditionDto = new MarketPriceConditionDto(placeType, date, capacity,
+                parkingAvailability);
+            result.add(marketPriceService.getByAddressCode(marketPriceConditionDto, addressCodeHead));
+        });
+
+        return result;
     }
 
     @GetMapping("/product/inRange/marketPrice/{regionDepth}")
