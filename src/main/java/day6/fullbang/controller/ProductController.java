@@ -20,15 +20,22 @@ public class ProductController {
 
     private final MarketPriceService marketPriceService;
 
-    @GetMapping("/product/{addressCodeHead}/marketPrice")
-    public MarketPriceDto getMarketPriceByAddressCode(@RequestParam PlaceType placeType, @RequestParam String date,
-        @RequestParam Integer capacity, @RequestParam Boolean parkingAvailability,
+    @GetMapping("/product/{addressCodeHead}/marketPrice/{placeType}")
+    public MarketPriceDto getMarketPriceByAddressCode(@PathVariable(name = "placeType") PlaceType placeType,
+        @RequestParam String date, @RequestParam Integer capacity, @RequestParam Boolean parkingAvailability,
         @PathVariable(name = "addressCodeHead") String addressCodeHead) {
 
         MarketPriceConditionDto marketPriceConditionDto = new MarketPriceConditionDto(placeType, date, capacity,
             parkingAvailability);
 
         return marketPriceService.getByAddressCode(marketPriceConditionDto, addressCodeHead);
+    }
+
+    @GetMapping("/product/{addressCodeHead}/marketPrice")
+    public List<MarketPriceDto> getAllMarketPriceByAddressCode(@RequestParam String date, @RequestParam Integer capacity,
+        @RequestParam Boolean parkingAvailability, @PathVariable(name = "addressCodeHead") String addressCodeHead) {
+
+        // TODO implement return market price dto list
     }
 
     @GetMapping("/product/inRange/marketPrice/{regionDepth}")
