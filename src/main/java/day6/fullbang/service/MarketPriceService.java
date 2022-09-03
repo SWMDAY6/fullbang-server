@@ -34,7 +34,7 @@ public class MarketPriceService {
         AddressInfoDto addressInfoDto = addressInfoService.getByAddressCode(addressCodeHead);
 
         return new MarketPriceDto(mean, mean - confidenceIntervalOffset, mean + confidenceIntervalOffset,
-            addressInfoDto, marketPriceConditionDto.getPlaceType());
+            marketPriceConditionDto.getPlaceType(), addressInfoDto);
     }
 
     public List<MarketPriceDto> getByCoordinateRange(MarketPriceConditionDto marketPriceConditionDto,
