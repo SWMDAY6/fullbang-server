@@ -41,4 +41,29 @@ public class AddressInfoRepository {
 
         return result;
     }
+
+    public AddressInfoDto getByAddressCode(String addressCodeHead) {
+
+        String queryString = "SELECT a FROM AddressInfo a";
+        int regionDepth = 1;
+
+        if (addressCodeHead.length() >= 2) {
+            queryString += " WHERE a.addressCode.region1DepthAddressCode = ";
+            queryString += addressCodeHead.substring(0, 2);
+        }
+        if (addressCodeHead.length() >= 5) {
+            queryString += " AND a.addressCode.region2DepthAddressCode = ";
+            queryString += addressCodeHead.substring(2, 5);
+            regionDepth++;
+        }
+        if (addressCodeHead.length() >= 8) {
+            queryString += " AND a.addressCode.region3DepthAddressCode = ";
+            queryString += addressCodeHead.substring(5, 8);
+            regionDepth++;
+        }
+
+        AddressInfo addressInfo = em.createQuery(queryString, AddressInfo.class).getResultList().get(0);
+
+        return new AddressInfoDto(addressInfo, regionDepth);
+    }
 }

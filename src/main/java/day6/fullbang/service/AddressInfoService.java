@@ -25,4 +25,8 @@ public class AddressInfoService {
 
         return addressInfoByCoordinateRange;
     }
+
+    public AddressInfoDto getByAddressCode(String addressCodeHead) {
+        return addressInfoRepository.getByAddressCode(addressCodeHead);
+    }
 }
