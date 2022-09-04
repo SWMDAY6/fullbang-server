@@ -20,13 +20,26 @@ public class AddressInfoDto {
 
     public AddressInfoDto(AddressInfo addressInfo, int regionDepth) {
         addressCodeHead = addressInfo.getAddressCodeHead(regionDepth);
-        region1DepthName = addressInfo.getRegion1DepthName();
-        region2DepthName = addressInfo.getRegion2DepthName();
-        region3DepthName = addressInfo.getRegion3DepthName();
-        region1DepthAddressCode = addressInfo.getAddressCode().getRegion1DepthAddressCode();
-        region2DepthAddressCode = addressInfo.getAddressCode().getRegion2DepthAddressCode();
-        region3DepthAddressCode = addressInfo.getAddressCode().getRegion3DepthAddressCode();
         latitude = addressInfo.getLatitude();
         longitude = addressInfo.getLongitude();
+
+        region1DepthName = addressInfo.getRegion1DepthName();
+        region1DepthAddressCode = addressInfo.getAddressCode().getRegion1DepthAddressCode();
+
+        if (addressInfo.getAddressCode().getRegion2DepthAddressCode() != null) {
+            region2DepthName = addressInfo.getRegion2DepthName();
+            region2DepthAddressCode = addressInfo.getAddressCode().getRegion2DepthAddressCode();
+        } else {
+            region2DepthName = "";
+            region2DepthAddressCode = "";
+        }
+
+        if (addressInfo.getAddressCode().getRegion3DepthAddressCode() != null) {
+            region3DepthName = addressInfo.getRegion3DepthName();
+            region3DepthAddressCode = addressInfo.getAddressCode().getRegion3DepthAddressCode();
+        } else {
+            region3DepthName = "";
+            region3DepthAddressCode = "";
+        }
     }
 }
