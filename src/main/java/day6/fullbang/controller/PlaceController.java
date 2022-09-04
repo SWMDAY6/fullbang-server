@@ -2,6 +2,7 @@ package day6.fullbang.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import day6.fullbang.domain.Place;
 import day6.fullbang.domain.PlaceType;
+import day6.fullbang.domain.Product;
+import day6.fullbang.domain.Room;
 import day6.fullbang.dto.request.CoordinateRangeDto;
 import day6.fullbang.dto.request.FilterOptionRequestDto;
 import day6.fullbang.dto.response.PlaceResponseDto;
@@ -31,7 +34,7 @@ public class PlaceController {
         @RequestParam("latitudeStart") Double latitudeStart,
         @RequestParam("longitudeEnd") Double longitudeEnd,
         @RequestParam("latitudeEnd") Double latitudeEnd,
-        @RequestParam("inputDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate localDate) {
+        @RequestParam("inputDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inputDate) {
         CoordinateRangeDto coordinateRangeDto = new CoordinateRangeDto(longitudeStart, latitudeStart, longitudeEnd,
             latitudeEnd);
 
@@ -39,7 +42,8 @@ public class PlaceController {
 
         List<PlaceResponseDto> responsePlaces = new ArrayList<>();
         for (Place place : placesByCoordinate) {
-            PlaceResponseDto item = new PlaceResponseDto(place, localDate);
+            Long lowestPrice = calculateLowestPriceInputDate(place.getRooms(), inputDate);
+            PlaceResponseDto item = new PlaceResponseDto(place, lowestPrice);
             responsePlaces.add(item);
         }
 
@@ -58,7 +62,7 @@ public class PlaceController {
 
         List<Place> filteredPlaces = placeService.findPlacesByOption(filterOptionRequestDto);
         List<PlaceResponseDto> filteredResponsePlaces = filteredPlaces.stream()
-            .map(p -> new PlaceResponseDto(p, inputDate))
+            .map(p -> new PlaceResponseDto(p, calculateLowestPriceInputDate(p.getRooms(), inputDate)))
             .collect(Collectors.toList());
 
         return filteredResponsePlaces;
@@ -71,11 +75,30 @@ public class PlaceController {
 
         List<PlaceResponseDto> responsePlaces = new ArrayList<>();
         for (Place place : placesByPlaceName) {
-            PlaceResponseDto item = new PlaceResponseDto(place, inputDate);
+            Long lowestPrice = calculateLowestPriceInputDate(place.getRooms(), inputDate);
+            PlaceResponseDto item = new PlaceResponseDto(place, lowestPrice);
             responsePlaces.add(item);
         }
 
         return responsePlaces;
+    }
+
+    public Long calculateLowestPriceInputDate(List<Room> rooms, LocalDate inputDate) {
+        List<Long> priceList = new ArrayList<>();
+        // LocalDate nowDate = LocalDate.now(ZoneId.of("Asia/Seoul")); //현재 날짜
+
+        for (Room room : rooms) {
+            List<Product> products = room.getProducts();
+
+            for (Product product : products) {
+                if ((product.getCheckInDateTime().toLocalDate().isEqual(inputDate)) && (product.getType()
+                    .equals("숙박"))) {
+                    priceList.add(product.getPrice());
+                }
+            }
+        }
+
+        return priceList.stream().min(Comparator.comparing(v -> v)).orElse(0L);
     }
 
 }

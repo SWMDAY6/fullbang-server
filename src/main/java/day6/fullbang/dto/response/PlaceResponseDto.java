@@ -1,15 +1,8 @@
 package day6.fullbang.dto.response;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
 import day6.fullbang.domain.Address;
 import day6.fullbang.domain.Place;
 import day6.fullbang.domain.PlaceType;
-import day6.fullbang.domain.Product;
-import day6.fullbang.domain.Room;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,13 +22,13 @@ public class PlaceResponseDto {
     private Double latitude; // 위도
     private Double longitude; // 경도
 
-    public PlaceResponseDto(Place place, LocalDate inputDate) {
+    public PlaceResponseDto(Place place, Long lowestPrice) {
         this.placeId = place.getId();
         this.placeName = place.getName();
         this.placeType = place.getType();
         this.placeImage = place.getRepresentative_image();
 
-        this.lowestPrice = calculateLowestPriceInputDate(place.getRooms(), inputDate);
+        this.lowestPrice = lowestPrice;
 
         Address address = place.getAddress();
         this.addressFullName = address.getAddressFullName();
@@ -45,24 +38,6 @@ public class PlaceResponseDto {
         this.addressCode = address.getAddressCode();
         this.latitude = address.getLatitude();
         this.longitude = address.getLongitude();
-    }
-
-    public Long calculateLowestPriceInputDate(List<Room> rooms, LocalDate inputDate) {
-        List<Long> priceList = new ArrayList<>();
-        // LocalDate nowDate = LocalDate.now(ZoneId.of("Asia/Seoul")); //현재 날짜
-
-        for (Room room : rooms) {
-            List<Product> products = room.getProducts();
-
-            for (Product product : products) {
-                if ((product.getCheckInDateTime().toLocalDate().isEqual(inputDate)) && (product.getType()
-                    .equals("숙박"))) {
-                    priceList.add(product.getPrice());
-                }
-            }
-        }
-
-        return priceList.stream().min(Comparator.comparing(v -> v)).orElse(0L);
     }
 
 }
