@@ -52,6 +52,8 @@ public class Place {
     @Column(unique = true)
     private Long yanoljaId;
 
-    @Column(unique = true)
-    private Long yeogieottaeId;
+	@Column(unique = true)
+	private Long yeogieottaeId;
+
+	private String representative_image;
 }
