@@ -26,6 +26,8 @@ public class AddressInfo {
     @Column(name = "region_3depth_name")
     private String region3DepthName;
 
+    private Integer regionDepth;
+
     private Double latitude;
     private Double longitude;
 
