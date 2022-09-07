@@ -12,5 +12,5 @@ jobs:
 
     steps:
       - name: run
-        run:  ./deploy.sh
+        run:  /home/ubuntu/fullbang-server/deploy.sh
         shell: bash
