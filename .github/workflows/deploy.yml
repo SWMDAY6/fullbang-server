@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: move to working dir
+        run:  cd /home/ubuntu/fullbang-server/
+        shell: bash
+
       - name: run
         run:  /home/ubuntu/fullbang-server/deploy.sh
         shell: bash
