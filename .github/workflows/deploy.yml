@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: debugging
-        run: echo `ls`
+        run: echo `ls ./`
         shell: bash
 
       - name: run
