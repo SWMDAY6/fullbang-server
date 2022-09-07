@@ -11,15 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: pull from master branch
-        run: git pull origin master
-        shell: bash
-
-      - name: build
-        run: ./gradlew clean build
-        shell: bash
-
-      - name: execute
-        run: nohup java -jar build/libs/fullbang-0.0.1-SNAPSHOT.jar &
+      - name: run
+        run:  ./deploy.sh
         shell: bash
