@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: debugging
-        run: echo `ls ./`
+      - name: chmod script
+        run: chmod -755 deploy.sh
         shell: bash
 
       - name: run
-        run:  /home/ubuntu/fullbang-server/deploy.sh
+        run:  deploy.sh
         shell: bash
