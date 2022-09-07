@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: debugging
+        run: ls
+        shell: bash
+
       - name: move to working dir
         run:  cd /home/ubuntu/fullbang-server/
         shell: bash
