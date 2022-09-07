@@ -11,9 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: kill java processes
-        run:  kill -9 `pidof java`
-        shell: bash
 
       - name: pull from master branch
         run: git pull origin master
