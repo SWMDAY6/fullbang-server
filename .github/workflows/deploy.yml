@@ -2,9 +2,9 @@ name: coinTalk chatRoom server CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [ feat/cicd ]
   pull_request:
-    branches: [ main ]
+    branches: [ feat/cicd ]
 
 env:
   S3_BUCKET_NAME: fullbang-production-deploy
