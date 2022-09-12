@@ -25,11 +25,15 @@ jobs:
 
       - name: Adding secret
         run: |
-          echo $DB_INFO >> src/main/resources/application.properties
+          echo $DB_URL >> src/main/resources/application.properties
+          echo $DB_USERNAME >> src/main/resources/application.properties
+          echo $DB_PASSWORD >> src/main/resources/application.properties
           cat src/main/resources/application.properties
         shell: bash
         env:
-          DB_INFO: ${{secrets.DB_SECRET_INFO}}
+          DB_URL : ${{secrets.DATESOURCE_URL}}
+          DB_USERNAME : ${{secrets.DATESOURCE_USERNAME}}
+          DB_PASSWORD : ${{secrets.DATESOURCE_PASSWORD}}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
