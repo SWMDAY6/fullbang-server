@@ -23,20 +23,12 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Adding secret
-        run: |
-          echo "spring.datasource.url=$DB_URL" >> src/main/resources/application.properties
-          echo "spring.datasource.username=$DB_USERNAME" >> src/main/resources/application.properties
-          echo "spring.datasource.password=$DB_PASSWORD" >> src/main/resources/application.properties
-          cat src/main/resources/application.properties
-        shell: bash
-        env:
-          DB_URL : ${{secrets.DATESOURCE_URL}}
-          DB_USERNAME : ${{ secrets.DATESOURCE_USERNAME }}
-          DB_PASSWORD : ${{ secrets.DATESOURCE_PASSWORD }}
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Build with Gradle
-        run: ./gradlew clean build
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PRODUCTION_IP }}
+          username: ${{ secrets.PRODUCTION_SSH_ID }}
+          key: ${{ secrets.PRODUCTION_SSH_KEY }}
+          port: ${{ secrets.PRODUCTION_SSH_PORT }}
+          script: |
+            whoami
