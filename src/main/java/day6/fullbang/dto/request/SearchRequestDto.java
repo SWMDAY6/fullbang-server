@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import day6.fullbang.domain.PlaceType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,22 +11,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FilterOptionRequestDto {
+public class SearchRequestDto {
 
     // place entity
-    private Boolean parkingAvailability;
-    private PlaceType placeType;
-
-    private Double longitudeStart;
-    private Double latitudeStart;
-    private Double longitudeEnd;
-    private Double latitudeEnd;
-
-    // room entity
-    private Integer maximumCapacity;
+    private String keyword;
+    private Double latitude;
+    private Double longitude;
 
     // product entity
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate checkInDate;
-
 }
