@@ -16,8 +16,9 @@ import day6.fullbang.domain.Place;
 import day6.fullbang.domain.PlaceType;
 import day6.fullbang.domain.Product;
 import day6.fullbang.domain.Room;
-import day6.fullbang.dto.request.CoordinateRangeDto;
+import day6.fullbang.dto.request.CoordinateRangeByDateDto;
 import day6.fullbang.dto.request.FilterOptionRequestDto;
+import day6.fullbang.dto.request.SearchRequestDto;
 import day6.fullbang.dto.response.PlaceResponseDto;
 import day6.fullbang.service.PlaceService;
 import lombok.RequiredArgsConstructor;
@@ -35,14 +36,15 @@ public class PlaceController {
         @RequestParam("longitudeEnd") Double longitudeEnd,
         @RequestParam("latitudeEnd") Double latitudeEnd,
         @RequestParam("inputDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inputDate) {
-        CoordinateRangeDto coordinateRangeDto = new CoordinateRangeDto(longitudeStart, latitudeStart, longitudeEnd,
-            latitudeEnd);
+        CoordinateRangeByDateDto coordinateRangeByDateDto = new CoordinateRangeByDateDto(longitudeStart, latitudeStart,
+            longitudeEnd,
+            latitudeEnd, inputDate);
 
-        List<Place> placesByCoordinate = placeService.findPlacesByCoordinate(coordinateRangeDto);
+        List<Place> placesByCoordinate = placeService.findPlacesByCoordinate(coordinateRangeByDateDto);
 
         List<PlaceResponseDto> responsePlaces = new ArrayList<>();
         for (Place place : placesByCoordinate) {
-            Long lowestPrice = calculateLowestPriceInputDate(place.getRooms(), inputDate);
+            Long lowestPrice = calculateLowestPriceInputDate(place.getRooms());
             PlaceResponseDto item = new PlaceResponseDto(place, lowestPrice);
             responsePlaces.add(item);
         }
@@ -53,16 +55,24 @@ public class PlaceController {
 
     @GetMapping("/places/option")
     public List<PlaceResponseDto> readFilteredPlaces(
-        @RequestParam("parkingAvailability") Boolean parkingAvailability,
-        @RequestParam("placeType") PlaceType placeType,
-        @RequestParam("maximumCapacity") Integer maximumCapacity,
-        @RequestParam("inputDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inputDate) {
+        @RequestParam("longitudeStart") Double longitudeStart,
+        @RequestParam("latitudeStart") Double latitudeStart,
+        @RequestParam("longitudeEnd") Double longitudeEnd,
+        @RequestParam("latitudeEnd") Double latitudeEnd,
+        @RequestParam("inputDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inputDate,
+        @RequestParam(value = "parkingAvailability", required = false)
+        Boolean parkingAvailability,
+        @RequestParam(value = "placeType", required = false)
+        PlaceType placeType,
+        @RequestParam(value = "maximumCapacity", required = false)
+        Integer maximumCapacity) {
         FilterOptionRequestDto filterOptionRequestDto =
-            new FilterOptionRequestDto(parkingAvailability, placeType, maximumCapacity, inputDate);
+            new FilterOptionRequestDto(parkingAvailability, placeType, longitudeStart, latitudeStart, longitudeEnd,
+                latitudeEnd, maximumCapacity, inputDate);
 
         List<Place> filteredPlaces = placeService.findPlacesByOption(filterOptionRequestDto);
         List<PlaceResponseDto> filteredResponsePlaces = filteredPlaces.stream()
-            .map(p -> new PlaceResponseDto(p, calculateLowestPriceInputDate(p.getRooms(), inputDate)))
+            .map(p -> new PlaceResponseDto(p, calculateLowestPriceInputDate(p.getRooms())))
             .collect(Collectors.toList());
 
         return filteredResponsePlaces;
@@ -70,12 +80,15 @@ public class PlaceController {
 
     @GetMapping("/search/{keyword}")
     public List<PlaceResponseDto> readPlacesByPlaceName(@PathVariable("keyword") String keyword,
+        @RequestParam("latitude") Double latitude,
+        @RequestParam("longitude") Double longitude,
         @RequestParam("inputDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inputDate) {
-        List<Place> placesByPlaceName = placeService.findPlacesByPlaceName(keyword);
+        SearchRequestDto searchRequestDto = new SearchRequestDto(keyword, latitude, longitude, inputDate);
+        List<Place> placesByPlaceName = placeService.findPlacesByPlaceName(searchRequestDto);
 
         List<PlaceResponseDto> responsePlaces = new ArrayList<>();
         for (Place place : placesByPlaceName) {
-            Long lowestPrice = calculateLowestPriceInputDate(place.getRooms(), inputDate);
+            Long lowestPrice = calculateLowestPriceInputDate(place.getRooms());
             PlaceResponseDto item = new PlaceResponseDto(place, lowestPrice);
             responsePlaces.add(item);
         }
@@ -83,7 +96,7 @@ public class PlaceController {
         return responsePlaces;
     }
 
-    public Long calculateLowestPriceInputDate(List<Room> rooms, LocalDate inputDate) {
+    public Long calculateLowestPriceInputDate(List<Room> rooms) {
         List<Long> priceList = new ArrayList<>();
         // LocalDate nowDate = LocalDate.now(ZoneId.of("Asia/Seoul")); //현재 날짜
 
@@ -91,8 +104,7 @@ public class PlaceController {
             List<Product> products = room.getProducts();
 
             for (Product product : products) {
-                if ((product.getCheckInDateTime().toLocalDate().isEqual(inputDate)) && (product.getType()
-                    .equals("숙박"))) {
+                if (product.getType().equals("숙박")) {
                     priceList.add(product.getPrice());
                 }
             }
