@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import day6.fullbang.domain.User;
+import day6.fullbang.dto.request.UserForm;
+import day6.fullbang.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController

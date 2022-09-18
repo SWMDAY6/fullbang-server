@@ -9,7 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Setter;
+
 @Entity
+@Setter // TODO refactor
 @Table(name = "user")
 public class User {
 
