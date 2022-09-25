@@ -1,6 +1,5 @@
 package day6.fullbang.repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -24,7 +23,7 @@ public class PlaceRepository {
             + "WHERE (p.address.latitude BETWEEN :latitudeStart AND :latitudeEnd) "
             + "AND (p.address.longitude BETWEEN :longitudeStart AND :longitudeEnd) "
             + "AND p IN (SELECT r FROM Room r JOIN r.products pr "
-            + "WHERE pr.checkInDateTime BETWEEN :checkInDate and :checkOutDate)";
+            + "WHERE pr.checkInDateTime = :checkInDate)";
 
         return em.createQuery(query, Place.class)
             .setParameter("latitudeStart", coordinateRangeByDateDto.getLatitudeStart())
@@ -32,7 +31,6 @@ public class PlaceRepository {
             .setParameter("longitudeStart", coordinateRangeByDateDto.getLongitudeStart())
             .setParameter("longitudeEnd", coordinateRangeByDateDto.getLongitudeEnd())
             .setParameter("checkInDate", coordinateRangeByDateDto.getCheckInDate().atStartOfDay())
-            .setParameter("checkOutDate", coordinateRangeByDateDto.getCheckInDate().plusDays(1).atStartOfDay())
             .getResultList();
     }
 
@@ -47,7 +45,7 @@ public class PlaceRepository {
             + "WHERE (p.address.latitude BETWEEN :latitudeStart AND :latitudeEnd) "
             + "AND (p.address.longitude BETWEEN :longitudeStart AND :longitudeEnd) "
             + "AND p IN (SELECT r FROM Room r JOIN r.products pr "
-            + "WHERE pr.checkInDateTime BETWEEN :checkInDate and :checkOutDate ";
+            + "WHERE pr.checkInDateTime = :checkInDate ";
 
         if (filterOptionRequestDto.getPlaceType() != null) {
             query += "AND p.type = :placeType ";
@@ -60,45 +58,37 @@ public class PlaceRepository {
         }
         query += ")";
 
-        LocalDate date = filterOptionRequestDto.getCheckInDate();
-
         return em.createQuery(query, Place.class)
             .setParameter("latitudeStart", latitudeStart)
             .setParameter("latitudeEnd", latitudeEnd)
             .setParameter("longitudeStart", longitudeStart)
             .setParameter("longitudeEnd", longitudeEnd)
-            .setParameter("checkInDate", date.atStartOfDay())
-            .setParameter("checkOutDate", date.plusDays(1).atStartOfDay())
+            .setParameter("checkInDate", filterOptionRequestDto.getCheckInDate().atStartOfDay())
             .setParameter("placeType", filterOptionRequestDto.getPlaceType())
             .setParameter("parkingAvailability", filterOptionRequestDto.getParkingAvailability())
             .setParameter("maximumCapacity", filterOptionRequestDto.getMaximumCapacity())
-
             .getResultList();
     }
 
     public List<Place> findPlacesByPlaceName(SearchRequestDto searchRequestDto) {
-        String query = "SELECT p FROM Place p WHERE p.name LIKE :placeNameQuery"
-            + " AND p IN (SELECT r FROM Room r JOIN r.products pr "
-            + "WHERE pr.checkInDateTime BETWEEN :checkInDate and :checkOutDate)";
 
-        // Double distance = ACOS[sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(lng1 - lng2)];
+        String nativequery = "SELECT * "
+            + "FROM place p "
+            + "LEFT JOIN room r ON p.place_id = r.place_id "
+            + "LEFT JOIN product pr ON r.room_id = pr.product_id "
+            + "WHERE p.place_name LIKE :keyword "
+            + "AND pr.check_in_date_time = :checkInDate "
+            + "ORDER BY(6371*acos(cos(radians(p.latitude))*cos(radians(:latitude))*cos(radians(:longitude) "
+            + "-radians(p.longitude))+sin(radians(p.latitude))*sin(radians(:latitude))))";
 
-        return em.createQuery(query, Place.class)
-            .setParameter("placeNameQuery", "%" + searchRequestDto.getKeyword() + "%")
+        List<Place> listResults = em.createNativeQuery(nativequery, Place.class)
+            .setParameter("longitude", searchRequestDto.getLongitude())
+            .setParameter("latitude", searchRequestDto.getLatitude())
+            .setParameter("keyword", "%" + searchRequestDto.getKeyword() + "%")
             .setParameter("checkInDate", searchRequestDto.getCheckInDate().atStartOfDay())
-            .setParameter("checkOutDate", searchRequestDto.getCheckInDate().plusDays(1).atStartOfDay())
             .getResultList();
-    }
 
-    // private static double distance(double lat1, double lat2, double long1, double long2) {
-    //     double theta = long1 - long2;
-    //
-    //     double dist =
-    //         Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2))
-    //             * Math.cos(deg2rad(theta));
-    //     dist = Math.acos(dist);
-    //     dist = rad2deg(dist);
-    //
-    //     dist = dist * 60 * 1.1515 * 1609.344;
-    // }
+        return listResults;
+    }
 }
+
