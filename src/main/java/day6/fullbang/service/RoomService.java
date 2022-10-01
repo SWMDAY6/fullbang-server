@@ -30,7 +30,7 @@ public class RoomService {
     }
 
     public List<RoomResponseDto> convertRoomIntoRoomDto(List<Room> roomsByPlaceId, LocalDate checkInDate) {
-        List<RoomResponseDto> roomResponseDtoList = new ArrayList<>(); // 반환할 DTO
+        List<RoomResponseDto> roomResponseDtoList = new ArrayList<>();
 
         for (Room room : roomsByPlaceId) {
             RoomResponseDto roomResponseDto = new RoomResponseDto();
@@ -51,13 +51,11 @@ public class RoomService {
             List<PriceDateInfoDto> stayPriceList = new ArrayList<>(); // 숙박 Dto List
 
             for (Product product : products) {
-
                 if (product.getType().contains("숙박")) {
                     stayPriceList.add(new PriceDateInfoDto(product.getPrice(), product.getPlatform(),
                         product.getType(), product.getCheckInDateTime().toLocalDate()));
                 }
                 setPlatformPrice(product, checkInDate, roomResponseDto);
-
             }
             roomResponseDto.setStayPriceList(stayPriceList);
 
