@@ -1,6 +1,5 @@
 package day6.fullbang.service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,106 +23,104 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RoomService {
 
-	private final RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
-	public List<Room> findRoomsByPlaceId(Long placeId) {
-		return roomRepository.findRoomsByPlaceId(placeId);
-	}
+    public List<Room> findRoomsByPlaceId(Long placeId) {
+        return roomRepository.findRoomsByPlaceId(placeId);
+    }
 
-	public List<RoomResponseDto> convertRoomIntoRoomDto(List<Room> roomsByPlaceId, LocalDate checkInDate) {
-		List<RoomResponseDto> roomResponseDtoList = new ArrayList<>(); // 반환할 DTO
+    public List<RoomResponseDto> convertRoomIntoRoomDto(List<Room> roomsByPlaceId, LocalDate checkInDate) {
+        List<RoomResponseDto> roomResponseDtoList = new ArrayList<>(); // 반환할 DTO
 
-		for (Room room : roomsByPlaceId) {
-			RoomResponseDto roomResponseDto = new RoomResponseDto();
-			roomResponseDto.setRoomId(room.getId());
-			roomResponseDto.setRoomName(room.getName());
+        for (Room room : roomsByPlaceId) {
+            RoomResponseDto roomResponseDto = new RoomResponseDto();
+            roomResponseDto.setRoomId(room.getId());
+            roomResponseDto.setRoomName(room.getName());
 
-			// image
-			List<Image> imageList = roomRepository.findImageByRoomId(room.getId());
-			List<String> imageUrlList = new ArrayList<>();
-			for (Image image : imageList) {
-				String imageUrl = image.getUrl();
-				imageUrlList.add(imageUrl);
-			}
-			roomResponseDto.setImgUrl(imageUrlList);
+            // image
+            List<Image> imageList = roomRepository.findImageByRoomId(room.getId());
+            List<String> imageUrlList = new ArrayList<>();
+            for (Image image : imageList) {
+                String imageUrl = image.getUrl();
+                imageUrlList.add(imageUrl);
+            }
+            roomResponseDto.setImgUrl(imageUrlList);
 
-			// Product
-			List<Product> products = room.getProducts();
-			List<PriceDateInfoDto> stayPriceList = new ArrayList<>(); // 숙박 Dto List
+            // Product
+            List<Product> products = room.getProducts();
+            List<PriceDateInfoDto> stayPriceList = new ArrayList<>(); // 숙박 Dto List
 
-			for (Product product : products) {
+            for (Product product : products) {
 
-				if (product.getType().contains("숙박")) {
-					stayPriceList.add(new PriceDateInfoDto(product.getPrice(), product.getPlatform(),
-						product.getType(), product.getCheckInDateTime().toLocalDate()));
-				}
-				setPlatformPrice(product, checkInDate, roomResponseDto);
+                if (product.getType().contains("숙박")) {
+                    stayPriceList.add(new PriceDateInfoDto(product.getPrice(), product.getPlatform(),
+                        product.getType(), product.getCheckInDateTime().toLocalDate()));
+                }
+                setPlatformPrice(product, checkInDate, roomResponseDto);
 
-			}
-			roomResponseDto.setStayPriceList(stayPriceList);
+            }
+            roomResponseDto.setStayPriceList(stayPriceList);
 
-			// 평일 평균 가격, 주말 평균 가격 구하기(숙박 기준)
-			Double[] averagePriceArray = calculateAveragePrice(stayPriceList);
-			roomResponseDto.setWeekdayStayAveragePrice(averagePriceArray[0]);
-			roomResponseDto.setWeekendStayAveragePrice(averagePriceArray[1]);
+            // 평일 평균 가격, 주말 평균 가격 구하기(숙박 기준)
+            Double[] averagePriceArray = calculateAveragePrice(stayPriceList);
+            roomResponseDto.setWeekdayStayAveragePrice(averagePriceArray[0]);
+            roomResponseDto.setWeekendStayAveragePrice(averagePriceArray[1]);
 
-			roomResponseDtoList.add(roomResponseDto);
-		}
+            roomResponseDtoList.add(roomResponseDto);
+        }
 
-		return roomResponseDtoList;
-	}
+        return roomResponseDtoList;
+    }
 
-	public void setPlatformPrice(Product product, LocalDate checkInDate, RoomResponseDto roomResponseDto) {
-		Platform platform = product.getPlatform();
-		log.info("setPlatform roomId:{} {},{}", roomResponseDto.getRoomId(), product.getPlatform(), product.getType());
-		if (!checkInDate.isEqual(product.getCheckInDateTime().toLocalDate())) {
-			return;
-		}
-		if (platform.equals(Platform.YANOLJA) && product.getType().contains("숙박")) {
-			roomResponseDto.setStayPriceYanolja(product.getPrice());
-			roomResponseDto.setUrlYanolja(product.getUrl());
-		} else if (platform.equals(Platform.YANOLJA) && (product.getType().contains("대실") ||
-			product.getType().equals("DayUse"))) {
-			roomResponseDto.setTimePriceYanolja(product.getPrice());
-			roomResponseDto.setUrlYanolja(product.getUrl());
-		} else if (platform.equals(Platform.YEOGIEOTTAE) && product.getType().contains("숙박")) {
-			roomResponseDto.setStayPriceYeogieottae(product.getPrice());
-			roomResponseDto.setUrlYeogieottae(product.getUrl());
-		} else if (platform.equals(Platform.YEOGIEOTTAE) && product.getType().contains("대실")) {
-			roomResponseDto.setTimePriceYeogieottae(product.getPrice());
-			roomResponseDto.setUrlYeogieottae(product.getUrl());
-		}
-	}
+    public void setPlatformPrice(Product product, LocalDate checkInDate, RoomResponseDto roomResponseDto) {
+        Platform platform = product.getPlatform();
+        if (!checkInDate.isEqual(product.getCheckInDateTime().toLocalDate())) {
+            return;
+        }
+        if (platform.equals(Platform.YANOLJA) && product.getType().contains("숙박")) {
+            roomResponseDto.setStayPriceYanolja(product.getPrice());
+            roomResponseDto.setUrlYanolja(product.getUrl());
+        } else if (platform.equals(Platform.YANOLJA) && (product.getType().contains("대실") ||
+            product.getType().equals("DayUse"))) {
+            roomResponseDto.setTimePriceYanolja(product.getPrice());
+            roomResponseDto.setUrlYanolja(product.getUrl());
+        } else if (platform.equals(Platform.YEOGIEOTTAE) && product.getType().contains("숙박")) {
+            roomResponseDto.setStayPriceYeogieottae(product.getPrice());
+            roomResponseDto.setUrlYeogieottae(product.getUrl());
+        } else if (platform.equals(Platform.YEOGIEOTTAE) && product.getType().contains("대실")) {
+            roomResponseDto.setTimePriceYeogieottae(product.getPrice());
+            roomResponseDto.setUrlYeogieottae(product.getUrl());
+        }
+    }
 
-	public Double[] calculateAveragePrice(List<PriceDateInfoDto> stayPriceList) {
+    public Double[] calculateAveragePrice(List<PriceDateInfoDto> stayPriceList) {
 
-		List<Long> weekdayPriceList = new ArrayList<>();
-		List<Long> weekendPriceList = new ArrayList<>();
+        List<Long> weekdayPriceList = new ArrayList<>();
+        List<Long> weekendPriceList = new ArrayList<>();
 
-		// 평일 List
-		List<Integer> weekdayIntList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        // 평일 List
+        List<String> weekdayList = new ArrayList<>(
+            Arrays.asList("SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY"));
 
-		for (PriceDateInfoDto priceDateInfoDto : stayPriceList) {
-			DayOfWeek dayOfWeek = priceDateInfoDto.getCheckInDate().getDayOfWeek();
+        for (PriceDateInfoDto priceDateInfoDto : stayPriceList) {
+            String dayOfWeek = priceDateInfoDto.getCheckInDate().getDayOfWeek().toString();
+            if (weekdayList.contains(dayOfWeek)) {
+                weekdayPriceList.add(priceDateInfoDto.getPrice());
+            } else {
+                weekendPriceList.add(priceDateInfoDto.getPrice());
+            }
+        }
 
-			Integer dayOfWeekNumber = dayOfWeek.getValue();
+        Double weekdayStayAveragePrice = getAverage(weekdayPriceList);
+        Double weekendStayAveragePrice = getAverage(weekendPriceList);
+        return new Double[] {weekdayStayAveragePrice, weekendStayAveragePrice};
+    }
 
-			if (weekdayIntList.contains(dayOfWeekNumber)) {
-				weekdayPriceList.add(priceDateInfoDto.getPrice());
-			} else {
-				weekendPriceList.add(priceDateInfoDto.getPrice());
-			}
-		}
-		Double weekdayStayAveragePrice = getAverage(weekdayPriceList);
-		Double weekendStayAveragePrice = getAverage(weekendPriceList);
-		return new Double[] {weekdayStayAveragePrice, weekendStayAveragePrice};
-	}
+    private static double getAverage(List<Long> list) {
+        LongSummaryStatistics stats = list.stream()
+            .mapToLong(Long::intValue)
+            .summaryStatistics();
+        return stats.getAverage();
+    }
 
-	private static double getAverage(List<Long> list) {
-		LongSummaryStatistics stats = list.stream()
-			.mapToLong(Long::intValue)
-			.summaryStatistics();
-		return stats.getAverage();
-	}
-	
 }
