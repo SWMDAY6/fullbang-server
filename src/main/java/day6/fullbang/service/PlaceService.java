@@ -56,8 +56,9 @@ public class PlaceService {
                 }
             }
         }
+        Long compareLowestPriceInPriceList = priceList.stream().min(Comparator.comparing(v -> v)).orElse(0L);
 
-        return priceList.stream().min(Comparator.comparing(v -> v)).orElse(0L);
+        return compareLowestPriceInPriceList;
     }
 
     public List<PlaceResponseDto> placesEntityToDto(List<Place> placesEntity) {
