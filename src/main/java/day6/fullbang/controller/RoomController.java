@@ -18,19 +18,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class RoomController {
 
-	private final RoomService roomService;
+    private final RoomService roomService;
 
-	@GetMapping("/room/{placeId}")
-	public List<RoomResponseDto> readRoomsByPlaceId(
-		@PathVariable("placeId") Long placeId,
-		@RequestParam("checkInDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkInDateTime) {
+    @GetMapping("/room/{placeId}")
+    public List<RoomResponseDto> readRoomsByPlaceId(
+        @PathVariable("placeId") Long placeId,
+        @RequestParam("checkInDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkInDateTime) {
 
-		List<Room> roomsByPlaceId = roomService.findRoomsByPlaceId(placeId);
+        List<Room> roomsByPlaceId = roomService.findRoomsByPlaceId(placeId);
 
-		List<RoomResponseDto> responseRoomsDto = roomService.convertRoomIntoRoomDto(roomsByPlaceId,
-			checkInDateTime);
+        List<RoomResponseDto> responseRoomsDto = roomService.convertRoomIntoRoomDto(roomsByPlaceId,
+            checkInDateTime);
 
-		return responseRoomsDto;
-	}
+        return responseRoomsDto;
+    }
 
 }
