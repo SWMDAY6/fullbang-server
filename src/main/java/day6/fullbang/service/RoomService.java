@@ -30,7 +30,9 @@ public class RoomService {
     }
 
     public List<RoomResponseDto> convertRoomIntoRoomDto(List<Room> roomsByPlaceId, LocalDate checkInDate) {
-        List<RoomResponseDto> roomResponseDtoList = new ArrayList<>();
+
+        List<RoomResponseDto> roomResponseDtoList = new ArrayList<>(); // 반환할 DTO
+
 
         for (Room room : roomsByPlaceId) {
             RoomResponseDto roomResponseDto = new RoomResponseDto();
@@ -48,19 +50,33 @@ public class RoomService {
 
             // Product
             List<Product> products = room.getProducts();
-            List<PriceDateInfoDto> stayPriceList = new ArrayList<>(); // 숙박 Dto List
+            List<PriceDateInfoDto> stayPriceListAll = new ArrayList<>(); // 전체 숙박 Dto list
+            List<PriceDateInfoDto> stayPriceListYanolja = new ArrayList<>(); // 야놀자 숙박 Dto List
+            List<PriceDateInfoDto> stayPriceListYeogieottae = new ArrayList<>(); // 여기어때 숙박 Dto List
 
             for (Product product : products) {
+
                 if (product.getType().contains("숙박")) {
-                    stayPriceList.add(new PriceDateInfoDto(product.getPrice(), product.getPlatform(),
+                    stayPriceListAll.add(new PriceDateInfoDto(product.getPrice(), product.getPlatform(),
                         product.getType(), product.getCheckInDateTime().toLocalDate()));
+                    if (product.getPlatform().equals(Platform.YANOLJA)) {
+                        stayPriceListYanolja.add(new PriceDateInfoDto(product.getPrice(), product.getPlatform(),
+                            product.getType(), product.getCheckInDateTime().toLocalDate()));
+                    } else {
+                        stayPriceListYeogieottae.add(new PriceDateInfoDto(product.getPrice(), product.getPlatform(),
+                            product.getType(), product.getCheckInDateTime().toLocalDate()));
+                    }
+
                 }
                 setPlatformPrice(product, checkInDate, roomResponseDto);
+
             }
-            roomResponseDto.setStayPriceList(stayPriceList);
+            roomResponseDto.setStayPriceListYanolja(stayPriceListYanolja);
+            roomResponseDto.setStayPriceListYeogieottae(stayPriceListYeogieottae);
 
             // 평일 평균 가격, 주말 평균 가격 구하기(숙박 기준)
-            Double[] averagePriceArray = calculateAveragePrice(stayPriceList);
+            Double[] averagePriceArray = calculateAveragePrice(stayPriceListAll);
+
             roomResponseDto.setWeekdayStayAveragePrice(averagePriceArray[0]);
             roomResponseDto.setWeekendStayAveragePrice(averagePriceArray[1]);
 
@@ -72,6 +88,7 @@ public class RoomService {
 
     public void setPlatformPrice(Product product, LocalDate checkInDate, RoomResponseDto roomResponseDto) {
         Platform platform = product.getPlatform();
+
         if (!checkInDate.isEqual(product.getCheckInDateTime().toLocalDate())) {
             return;
         }
@@ -97,18 +114,20 @@ public class RoomService {
         List<Long> weekendPriceList = new ArrayList<>();
 
         // 평일 List
-        List<String> weekdayList = new ArrayList<>(
-            Arrays.asList("SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY"));
+
+        List<Integer> weekdayIntList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
 
         for (PriceDateInfoDto priceDateInfoDto : stayPriceList) {
-            String dayOfWeek = priceDateInfoDto.getCheckInDate().getDayOfWeek().toString();
-            if (weekdayList.contains(dayOfWeek)) {
+            DayOfWeek dayOfWeek = priceDateInfoDto.getCheckInDate().getDayOfWeek();
+
+            Integer dayOfWeekNumber = dayOfWeek.getValue();
+
+            if (weekdayIntList.contains(dayOfWeekNumber)) {
                 weekdayPriceList.add(priceDateInfoDto.getPrice());
             } else {
                 weekendPriceList.add(priceDateInfoDto.getPrice());
             }
-        }
-
+       
         Double weekdayStayAveragePrice = getAverage(weekdayPriceList);
         Double weekendStayAveragePrice = getAverage(weekendPriceList);
         return new Double[] {weekdayStayAveragePrice, weekendStayAveragePrice};
