@@ -1,6 +1,5 @@
 package day6.fullbang.service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +30,9 @@ public class RoomService {
     }
 
     public List<RoomResponseDto> convertRoomIntoRoomDto(List<Room> roomsByPlaceId, LocalDate checkInDate) {
+
         List<RoomResponseDto> roomResponseDtoList = new ArrayList<>(); // 반환할 DTO
+
 
         for (Room room : roomsByPlaceId) {
             RoomResponseDto roomResponseDto = new RoomResponseDto();
@@ -75,6 +76,7 @@ public class RoomService {
 
             // 평일 평균 가격, 주말 평균 가격 구하기(숙박 기준)
             Double[] averagePriceArray = calculateAveragePrice(stayPriceListAll);
+
             roomResponseDto.setWeekdayStayAveragePrice(averagePriceArray[0]);
             roomResponseDto.setWeekendStayAveragePrice(averagePriceArray[1]);
 
@@ -86,7 +88,7 @@ public class RoomService {
 
     public void setPlatformPrice(Product product, LocalDate checkInDate, RoomResponseDto roomResponseDto) {
         Platform platform = product.getPlatform();
-        log.info("setPlatform roomId:{} {},{}", roomResponseDto.getRoomId(), product.getPlatform(), product.getType());
+
         if (!checkInDate.isEqual(product.getCheckInDateTime().toLocalDate())) {
             return;
         }
@@ -112,6 +114,7 @@ public class RoomService {
         List<Long> weekendPriceList = new ArrayList<>();
 
         // 평일 List
+
         List<Integer> weekdayIntList = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
 
         for (PriceDateInfoDto priceDateInfoDto : stayPriceList) {
@@ -124,7 +127,7 @@ public class RoomService {
             } else {
                 weekendPriceList.add(priceDateInfoDto.getPrice());
             }
-        }
+       
         Double weekdayStayAveragePrice = getAverage(weekdayPriceList);
         Double weekendStayAveragePrice = getAverage(weekendPriceList);
         return new Double[] {weekdayStayAveragePrice, weekendStayAveragePrice};
