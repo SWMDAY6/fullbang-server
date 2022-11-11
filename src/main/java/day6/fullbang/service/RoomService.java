@@ -1,5 +1,6 @@
 package day6.fullbang.service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +33,6 @@ public class RoomService {
     public List<RoomResponseDto> convertRoomIntoRoomDto(List<Room> roomsByPlaceId, LocalDate checkInDate) {
 
         List<RoomResponseDto> roomResponseDtoList = new ArrayList<>(); // 반환할 DTO
-
 
         for (Room room : roomsByPlaceId) {
             RoomResponseDto roomResponseDto = new RoomResponseDto();
@@ -127,9 +127,10 @@ public class RoomService {
             } else {
                 weekendPriceList.add(priceDateInfoDto.getPrice());
             }
-       
+        }
         Double weekdayStayAveragePrice = getAverage(weekdayPriceList);
         Double weekendStayAveragePrice = getAverage(weekendPriceList);
+
         return new Double[] {weekdayStayAveragePrice, weekendStayAveragePrice};
     }
 
