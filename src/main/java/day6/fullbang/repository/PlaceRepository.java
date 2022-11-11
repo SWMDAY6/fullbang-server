@@ -72,23 +72,20 @@ public class PlaceRepository {
 
     public List<Place> findPlacesByPlaceName(SearchRequestDto searchRequestDto) {
 
-        String nativequery = "SELECT * "
-            + "FROM place p "
-            + "LEFT JOIN room r ON p.place_id = r.place_id "
-            + "LEFT JOIN product pr ON r.room_id = pr.product_id "
-            + "WHERE p.place_name LIKE :keyword "
-            + "AND pr.check_in_date_time = :checkInDate "
-            + "ORDER BY(6371*acos(cos(radians(p.latitude))*cos(radians(:latitude))*cos(radians(:longitude) "
-            + "-radians(p.longitude))+sin(radians(p.latitude))*sin(radians(:latitude))))";
+        String query = "SELECT p FROM Place p "
+            + "LEFT JOIN p.rooms r ON p.id = r.place.id "
+            + "LEFT JOIN r.products pr ON pr.room.id = r.id "
+            + "WHERE p.name LIKE :keyword "
+            + "AND pr.checkInDateTime = :checkInDate "
+            + "ORDER BY ST_Distance_Sphere(point(p.address.longitude,p.address.latitude), point(:x,:y))";
 
-        List<Place> listResults = em.createNativeQuery(nativequery, Place.class)
-            .setParameter("longitude", searchRequestDto.getLongitude())
-            .setParameter("latitude", searchRequestDto.getLatitude())
+        return em.createQuery(query, Place.class)
             .setParameter("keyword", "%" + searchRequestDto.getKeyword() + "%")
             .setParameter("checkInDate", searchRequestDto.getCheckInDate().atStartOfDay())
+            .setParameter("x", searchRequestDto.getLongitude())
+            .setParameter("y", searchRequestDto.getLatitude())
             .getResultList();
 
-        return listResults;
     }
 }
 
