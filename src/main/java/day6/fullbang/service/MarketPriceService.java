@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import day6.fullbang.domain.MarketPrice;
 import day6.fullbang.dto.addressInfo.AddressInfoDto;
@@ -16,6 +17,7 @@ import day6.fullbang.util.MarketPriceCalculator;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MarketPriceService {
 
@@ -44,8 +46,13 @@ public class MarketPriceService {
 
         AddressInfoDto addressInfoDto = addressInfoService.getByAddressCode(addressCodeHead);
 
-        return new MarketPriceDto(mean, mean - confidenceIntervalOffset, mean + confidenceIntervalOffset,
+        MarketPriceDto result = new MarketPriceDto(mean, mean - confidenceIntervalOffset,
+            mean + confidenceIntervalOffset,
             marketPriceConditionDto.getPlaceType(), addressInfoDto);
+
+        marketPriceRepository.save(result);
+
+        return result;
     }
 
     public List<MarketPriceDto> getByCoordinateRange(MarketPriceConditionDto marketPriceConditionDto,
