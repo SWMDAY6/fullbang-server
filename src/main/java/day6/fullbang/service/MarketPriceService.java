@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import day6.fullbang.domain.MarketPrice;
 import day6.fullbang.dto.addressInfo.AddressInfoDto;
 import day6.fullbang.dto.product.PriceInfoDto;
 import day6.fullbang.dto.request.CoordinateRangeDto;
 import day6.fullbang.dto.request.MarketPriceConditionDto;
 import day6.fullbang.dto.response.MarketPriceDto;
+import day6.fullbang.repository.MarketPriceRepository;
 import day6.fullbang.util.MarketPriceCalculator;
 import lombok.RequiredArgsConstructor;
 
@@ -19,8 +21,17 @@ public class MarketPriceService {
 
     private final ProductService productService;
     private final AddressInfoService addressInfoService;
+    private final MarketPriceRepository marketPriceRepository;
 
     public MarketPriceDto getByAddressCode(MarketPriceConditionDto marketPriceConditionDto, String addressCodeHead) {
+
+        MarketPrice cachedMarketPrice = marketPriceRepository.getMarketPriceByAddressCode(addressCodeHead);
+        if (cachedMarketPrice != null) {
+
+            return new MarketPriceDto(cachedMarketPrice.getMean(), cachedMarketPrice.getMinMeanOfRange(),
+                cachedMarketPrice.getMaxMeanOfRange(), cachedMarketPrice.getPlaceType(),
+                addressInfoService.getByAddressCode(addressCodeHead));
+        }
 
         List<PriceInfoDto> targetProducts = productService.getPriceInfoByAddressCode(marketPriceConditionDto,
             addressCodeHead);

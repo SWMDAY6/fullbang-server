@@ -1,20 +1,17 @@
 package day6.fullbang.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import day6.fullbang.dto.addressInfo.AddressInfoDto;
+import day6.fullbang.dto.response.MarketPriceDto;
+import day6.fullbang.service.AddressInfoService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -30,7 +27,10 @@ public class MarketPrice {
 
     @Column(name = "place_type")
     @Enumerated(EnumType.STRING)
-    private PlaceType type;
+    private PlaceType placeType;
 
-    private String AddressCodeHead;
+    private String addressCodeHead;
+    private Double mean;
+    private Double minMeanOfRange;
+    private Double maxMeanOfRange;
 }
