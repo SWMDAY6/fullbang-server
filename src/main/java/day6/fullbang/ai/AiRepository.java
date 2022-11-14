@@ -1,5 +1,6 @@
 package day6.fullbang.ai;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -32,9 +33,11 @@ public class AiRepository {
     }
 
     public void checkEmail(Long id) {
-        em.createQuery("UPDATE AiInputData a SET a.isSend = true "
+        em.createQuery("UPDATE AiInputData a SET a.isSend = true,"
+                + "a.sendDate = :sendDate "
                 + "WHERE a.id = :id")
             .setParameter("id", id)
+            .setParameter("sendDate", LocalDate.now())
             .executeUpdate();
         em.clear();
     }
