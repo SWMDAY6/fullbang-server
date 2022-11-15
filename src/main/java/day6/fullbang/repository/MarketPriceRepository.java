@@ -36,6 +36,9 @@ public class MarketPriceRepository {
 
     public void save(MarketPriceDto marketPriceDto) {
         MarketPrice marketPrice = new MarketPrice();
+        if (Double.isNaN(marketPriceDto.getMean())) {
+            return;
+        }
         marketPrice.setMean(marketPriceDto.getMean());
         marketPrice.setMaxMeanOfRange(marketPriceDto.getMaxMeanOfRange());
         marketPrice.setMinMeanOfRange(marketPriceDto.getMinMeanOfRange());

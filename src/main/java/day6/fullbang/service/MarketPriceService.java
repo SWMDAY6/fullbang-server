@@ -65,7 +65,12 @@ public class MarketPriceService {
 
         addressInfos.getAddressInfoDtos().forEach(
             addressInfo -> {
-                resultList.add(getByAddressCode(marketPriceConditionDto, addressInfo.getAddressCodeHead()));
+                MarketPriceDto marketPrice = getByAddressCode(marketPriceConditionDto,
+                    addressInfo.getAddressCodeHead());
+                if (!Double.isNaN(marketPrice.getMean()) && !Double.isNaN(marketPrice.getMaxMeanOfRange())
+                    && !Double.isNaN(marketPrice.getMinMeanOfRange())) {
+                    resultList.add(marketPrice);
+                }
             });
 
         return resultList;

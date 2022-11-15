@@ -4,8 +4,10 @@ import day6.fullbang.domain.PlaceType;
 import day6.fullbang.dto.addressInfo.AddressInfoDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @RequiredArgsConstructor
 public class MarketPriceDto {
 
