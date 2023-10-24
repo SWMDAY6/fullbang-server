@@ -14,7 +14,7 @@ b# 🏨 풀방 BE
 
 ## 🧑🏻‍💻 Service Architecture 👩🏻‍💻
 
-![Alt text](image.png)
+![Alt text](images/Service_Architecture.png)
 
 ## 📚 주요 기능 📚
 
